@@ -1,9 +1,11 @@
+import Login from "./pages/Login"
+
 function App() {
 
   return (
-    <>
-      <h1>hi</h1>
-    </>
+    <div className="font-[Inter]" >
+      <Login />
+    </div>
   )
 }
 
