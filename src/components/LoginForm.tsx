@@ -24,7 +24,7 @@ const LoginForm = () => {
             </p>
           </div>
           <div className="px-6 w-screen mt-4 md:w-full md:px-0">
-            <button className="w-full px-3.5 py-2 text-lg rounded border border-blue-950 border-opacity-25 justify-center items-center gap-5 inline-flex">
+            <button className="cursor-pointer w-full px-3.5 py-2 text-lg rounded border border-blue-950 border-opacity-25 justify-center items-center gap-5 inline-flex hover:bg-gray-200 hover:border-gray-200">
               <FcGoogle />
             </button>
           </div>
@@ -80,14 +80,14 @@ const LoginForm = () => {
                 placeholder="Password"
               />
               <div
-                className="absolute right-2 top-2 text-[#193B67]"
+                className="absolute right-2 top-2 text-gray-500 cursor-pointer"
                 onClick={switchType}
               >
                 {text ? <AiFillEye /> : <AiOutlineEye />}
               </div>
             </div>
 
-            <button className="w-full px-3.5 py-2 bg-black bg-opacity-80 rounded text-center text-neutral-100 text-base font-semibold mt-6">
+            <button className=" cursor-pointer w-full px-3.5 py-2 bg-black bg-opacity-80 rounded text-center text-neutral-100 text-base font-semibold mt-6">
               Get Started
             </button>
           </div>
@@ -95,7 +95,7 @@ const LoginForm = () => {
             <p className="text-center text-black text-[13px] font-normal leading-none">
               Already have an account?
             </p>
-            <a className="text-center text-neutral-700 text-opacity-80 text-[13px] font-semibold">
+            <a className=" cursor-pointer text-center text-neutral-700 text-opacity-80 text-[13px] font-semibold">
               Log in
             </a>
           </div>
