@@ -1,8 +1,12 @@
 import { FcGoogle } from "react-icons/fc";
 import { AiOutlineEye, AiFillEye } from "react-icons/ai";
 import { useState } from "react";
-import { auth } from "../config/firebase";
-import { createUserWithEmailAndPassword } from "firebase/auth";
+import { auth, googleProvider } from "../config/firebase";
+import {
+  createUserWithEmailAndPassword,
+  signInWithPopup,
+  signOut,
+} from "firebase/auth";
 
 const RegisterForm = () => {
   const [text, setText] = useState(false);
@@ -10,7 +14,29 @@ const RegisterForm = () => {
   const [password, setPassword] = useState("");
 
   const signIn = async () => {
-    await createUserWithEmailAndPassword(auth, email, password);
+    try {
+      await createUserWithEmailAndPassword(auth, email, password);
+    } catch (err) {
+      console.error(err);
+    }
+  };
+
+  const signInWithGoogle = async () => {
+    try {
+      await signInWithPopup(auth, googleProvider);
+    } catch (err) {
+      console.error(err);
+    }
+  };
+
+  console.log(auth.currentUser?.email);
+
+  const logout = async () => {
+    try {
+      await signOut(auth);
+    } catch (err) {
+      console.error(err);
+    }
   };
 
   //switch password type
@@ -32,7 +58,10 @@ const RegisterForm = () => {
             </p>
           </div>
           <div className="px-6 w-screen mt-4 md:w-full md:px-0">
-            <button className="cursor-pointer w-full px-3.5 py-2 text-lg rounded border border-blue-950 border-opacity-25 justify-center items-center gap-5 inline-flex hover:bg-gray-200 hover:border-gray-200">
+            <button
+              onClick={signInWithGoogle}
+              className="cursor-pointer w-full px-3.5 py-2 text-lg rounded border border-blue-950 border-opacity-25 justify-center items-center gap-5 inline-flex hover:bg-gray-200 hover:border-gray-200"
+            >
               <FcGoogle />
             </button>
           </div>
@@ -102,6 +131,13 @@ const RegisterForm = () => {
               className=" cursor-pointer w-full px-3.5 py-2 bg-black bg-opacity-80 rounded text-center text-neutral-100 text-base font-semibold mt-6"
             >
               Get Started
+            </button>
+
+            <button
+              onClick={logout}
+              className=" cursor-pointer w-full px-3.5 py-2 bg-black bg-opacity-80 rounded text-center text-neutral-100 text-base font-semibold mt-6"
+            >
+              Log out
             </button>
           </div>
           <div className="flex items-center justify-center space-x-1">
