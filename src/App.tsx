@@ -1,12 +1,16 @@
-import Login from "./pages/Login"
+import Dashboard from "./pages/Dashboard";
+import Login from "./pages/Login";
+import { BrowserRouter } from "react-router-dom";
 
 function App() {
-
   return (
-    <div className="font-[Inter]" >
-      <Login />
-    </div>
-  )
+    <BrowserRouter>
+      <div className="font-[Inter]">
+        <Login />
+        <Dashboard />
+      </div>
+    </BrowserRouter>
+  );
 }
 
-export default App
+export default App;

@@ -5,8 +5,9 @@ import { auth, googleProvider } from "../config/firebase";
 import {
   createUserWithEmailAndPassword,
   signInWithPopup,
-  signOut,
 } from "firebase/auth";
+
+//import {Link} from 'react-router-dom'
 
 const RegisterForm = () => {
   const [text, setText] = useState(false);
@@ -24,16 +25,6 @@ const RegisterForm = () => {
   const signInWithGoogle = async () => {
     try {
       await signInWithPopup(auth, googleProvider);
-    } catch (err) {
-      console.error(err);
-    }
-  };
-
-  console.log(auth.currentUser?.email);
-
-  const logout = async () => {
-    try {
-      await signOut(auth);
     } catch (err) {
       console.error(err);
     }
@@ -131,13 +122,6 @@ const RegisterForm = () => {
               className=" cursor-pointer w-full px-3.5 py-2 bg-black bg-opacity-80 rounded text-center text-neutral-100 text-base font-semibold mt-6"
             >
               Get Started
-            </button>
-
-            <button
-              onClick={logout}
-              className=" cursor-pointer w-full px-3.5 py-2 bg-black bg-opacity-80 rounded text-center text-neutral-100 text-base font-semibold mt-6"
-            >
-              Log out
             </button>
           </div>
           <div className="flex items-center justify-center space-x-1">
