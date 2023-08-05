@@ -2,7 +2,7 @@ import { FcGoogle } from "react-icons/fc";
 import { AiOutlineEye, AiFillEye } from "react-icons/ai";
 import { useState } from "react";
 
-const LoginForm = () => {
+const RegisterForm = () => {
   const [text, setText] = useState(false);
 
   //switch password type
@@ -105,4 +105,4 @@ const LoginForm = () => {
   );
 };
 
-export default LoginForm;
+export default RegisterForm;
