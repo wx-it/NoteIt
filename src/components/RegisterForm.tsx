@@ -1,9 +1,17 @@
 import { FcGoogle } from "react-icons/fc";
 import { AiOutlineEye, AiFillEye } from "react-icons/ai";
 import { useState } from "react";
+import { auth } from "../config/firebase";
+import { createUserWithEmailAndPassword } from "firebase/auth";
 
 const RegisterForm = () => {
   const [text, setText] = useState(false);
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+
+  const signIn = async () => {
+    await createUserWithEmailAndPassword(auth, email, password);
+  };
 
   //switch password type
   const switchType = () => {
@@ -38,7 +46,7 @@ const RegisterForm = () => {
         </div>
 
         <div className="w-full px-6 space-y-4 md:px-0">
-          <div>
+          {/* <div>
             <div className="">
               <span className="text-black text-opacity-80 text-xs font-medium">
                 Full Name
@@ -50,7 +58,7 @@ const RegisterForm = () => {
               type="text"
               placeholder="Full Name"
             />
-          </div>
+          </div> */}
 
           <div className="">
             <div className="">
@@ -63,6 +71,7 @@ const RegisterForm = () => {
               className="w-full text-xs pr-4 pl-3 py-2 rounded-[3px] shadow  border-blue-950 border-opacity-20 border focus:border-black focus:border-opacity-80 focus:outline-none"
               type="text"
               placeholder="Email"
+              onChange={(e) => setEmail(e.target.value)}
             />
           </div>
 
@@ -78,6 +87,7 @@ const RegisterForm = () => {
                 className="w-full text-xs pr-4 pl-3 py-2 rounded-[3px] shadow  border-blue-950 border-opacity-20 border focus:border-black focus:border-opacity-80 focus:outline-none"
                 type={text ? "text" : "password"}
                 placeholder="Password"
+                onChange={(e) => setPassword(e.target.value)}
               />
               <div
                 className="absolute right-2 top-2 text-gray-500 cursor-pointer"
@@ -87,7 +97,10 @@ const RegisterForm = () => {
               </div>
             </div>
 
-            <button className=" cursor-pointer w-full px-3.5 py-2 bg-black bg-opacity-80 rounded text-center text-neutral-100 text-base font-semibold mt-6">
+            <button
+              onClick={signIn}
+              className=" cursor-pointer w-full px-3.5 py-2 bg-black bg-opacity-80 rounded text-center text-neutral-100 text-base font-semibold mt-6"
+            >
               Get Started
             </button>
           </div>
