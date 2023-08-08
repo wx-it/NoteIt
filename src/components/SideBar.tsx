@@ -14,9 +14,16 @@ const SideBar = ({ notesList }) => {
   return (
     <motion.div
       initial={{ x: 0 }}
-      animate={{ x: rotate ? -300 : 0 }}
-      transition={{ type: "spring", stiffness: 200, damping: 20 }}
-      className="border border-r-gray-300 w-[30%] "
+      animate={{ x: rotate ? -3000 : 0, width: rotate ? "0" : "25%" }}
+      transition={{
+        type: "tween",
+        ease: "easeInOut",
+        duration: 0.8,
+      }}
+      className=
+           "border border-r-gray-300 h-screen "
+
+
     >
       <div className="bg-gray-200 flex items-center justify-between p-5">
         <h1 className="text-black text-2xl font-semibold0">NOTE iT</h1>
