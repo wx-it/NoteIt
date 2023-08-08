@@ -10,8 +10,9 @@ const Dashboard = () => {
   const [notesList, setNotesList] = useState<NoteData[]>([]);
   const [rotate, setRotate] = useState(false);
   const [selectedNote, setSelectedNote] = useState<NoteData | null>(null);
-
+  
   const notesCollection = collection(db, "notes");
+  const selectedNoteId = localStorage.getItem("selectedNoteId");
 
   const handleSelectNote = (note: NoteData) => {
     localStorage.setItem("selectedNoteId", note.id);
@@ -34,14 +35,13 @@ const Dashboard = () => {
     };
     getNotesList();
 
-    const selectedNoteId = localStorage.getItem("selectedNoteId");
     if (selectedNoteId) {
       const storedNote = notesList.find((note) => note.id === selectedNoteId);
       if (storedNote) {
         setSelectedNote(storedNote);
       }
     }
-  }, [notesList, notesCollection]);
+  }, [notesList, notesCollection, selectedNoteId]);
 
   return (
     <div className="flex w-full h-screen">
@@ -51,6 +51,7 @@ const Dashboard = () => {
         rotate={rotate}
         setRotate={setRotate}
         onSelectNote={handleSelectNote}
+        selectedNoteId={selectedNoteId}
       />
       <Note selectedNote={selectedNote} />
     </div>

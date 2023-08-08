@@ -1,13 +1,21 @@
 import { IoIosArrowDown } from "react-icons/io";
 import { motion } from "framer-motion";
 
-
-const SideBar = ({ notesList, setRotate, rotate, onSelectNote }) => {
-
+const SideBar = ({
+  notesList,
+  setRotate,
+  rotate,
+  onSelectNote,
+  selectedNoteId,
+}) => {
   const notesTitles = notesList.map((note) => (
     <div
       key={note.id}
-      className="border border-gray-200 p-5 hover:bg-gray-200 cursor-pointer"
+      className={
+        selectedNoteId === note.id
+          ? "border border-gray-200 p-5 bg-gray-200 cursor-pointer"
+          : "border border-gray-200 p-5 hover:bg-gray-200 cursor-pointer"
+      }
       onClick={() => onSelectNote(note)}
     >
       <h3>{note.title}</h3>
