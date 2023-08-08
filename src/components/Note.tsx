@@ -1,15 +1,15 @@
+import NoteData from "../noteData";
+interface NoteContentProps {
+  selectedNote: NoteData  | null;
+}
 
-const Note = ({notesList}) => {
+const Note:  React.FC<NoteContentProps> = ({selectedNote}) => {
   return (
-    <div className="w-full">
-      {notesList.map(note =>(
-        <div key={note.id} >
-          <h2> {note.title} </h2>
-          <p> {note.content} </p>
-        </div>
-      ))}
+    <div>
+      <h2>{selectedNote?.title}</h2>
+      <p>{selectedNote?.content}</p>
     </div>
-  )
+  );
 }
 
 export default Note

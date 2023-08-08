@@ -1,9 +1,15 @@
 import { IoIosArrowDown } from "react-icons/io";
 import { motion } from "framer-motion";
 
-const SideBar = ({ notesList, setRotate, rotate }) => {
+
+const SideBar = ({ notesList, setRotate, rotate, onSelectNote }) => {
+
   const notesTitles = notesList.map((note) => (
-    <div className="border border-gray-200 p-5" key={note.id}>
+    <div
+      key={note.id}
+      className="border border-gray-200 p-5 hover:bg-gray-200 cursor-pointer"
+      onClick={() => onSelectNote(note)}
+    >
       <h3>{note.title}</h3>
       <p className="text-gray-400">{note.content.substring(0, 20)}...</p>
     </div>
@@ -15,15 +21,16 @@ const SideBar = ({ notesList, setRotate, rotate }) => {
       transition={{
         type: "tween",
         ease: "easeInOut",
-        duration: 0.8,
+        duration: 1,
       }}
       className="border border-r-gray-300 h-screen "
     >
-      <div className="bg-gray-200 flex items-center justify-between p-5">
+      <div className=" flex items-center justify-between p-5">
         <h1 className="text-black text-2xl font-semibold0">NOTE iT</h1>
         <motion.div
+          whileTap={{ scale: rotate ? 0.9 : 0 }}
           onClick={() => setRotate(!rotate)}
-          className="flex flex-col items-center justify-center bg-white p-2 px-4 rounded-md cursor-pointer w-fit"
+          className="flex flex-col items-center justify-center bg-gray-200 p-2 px-4 rounded-md cursor-pointer w-fit"
         >
           <motion.div
             whileHover={{ scale: rotate ? 1.1 : 1.1 }}
