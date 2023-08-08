@@ -1,6 +1,11 @@
 import { motion } from "framer-motion";
 
-const OpenSidebar = ({ setRotate, rotate }) => {
+interface OpenSidebarProps {
+  setRotate: boolean;
+  rotate: boolean;
+}
+
+const OpenSidebar: React.FC<OpenSidebarProps> = ({ setRotate, rotate }) => {
   return (
     <motion.button
       whileHover={{ scale: 1.1, x: 0 }}

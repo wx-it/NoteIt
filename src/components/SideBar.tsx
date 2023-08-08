@@ -1,7 +1,15 @@
 import { IoIosArrowDown } from "react-icons/io";
 import { motion } from "framer-motion";
+import NoteData from "../noteData";
+interface SidebarProps {
+  notesList: NoteData[];
+  setRotate: boolean;
+  rotate: boolean;
+  onSelectNote: (note: NoteData) => void;
+  selectedNoteId: string
+}
 
-const SideBar = ({
+const SideBar: React.FC<SidebarProps> = ({
   notesList,
   setRotate,
   rotate,
