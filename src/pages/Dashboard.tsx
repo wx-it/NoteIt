@@ -6,26 +6,18 @@ import Note from "../components/Note";
 
 const Dashboard = () => {
   const [notesList, setNotesList] = useState([]);
-  console.log(
-    notesList.map((n) =>
-      n.folder.map((note) => (
-        <div>
-          <p>{note.title}</p> <p>{note.content}</p>
-        </div>
-      ))
-    )
-  );
-
-  const notesCollection = collection(db, "Notes");
+  const notesCollection = collection(db, "notes");
 
   useEffect(() => {
     const getNotesList = async () => {
       try {
         const data = await getDocs(notesCollection);
         const filteredData = data.docs.map((doc) => ({
+          id: doc.id,
           ...doc.data(),
         }));
         setNotesList(filteredData);
+        //console.log(notesList)
       } catch (err) {
         console.error(err);
       }
@@ -34,7 +26,7 @@ const Dashboard = () => {
   }, []);
 
   return (
-    <div className="flex w-full h-screen" >
+    <div className="flex w-full h-screen">
       <SideBar notesList={notesList} />
       <Note notesList={notesList} />
     </div>
