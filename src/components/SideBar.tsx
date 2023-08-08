@@ -1,10 +1,7 @@
 import { IoIosArrowDown } from "react-icons/io";
-import { useState } from "react";
 import { motion } from "framer-motion";
 
-const SideBar = ({ notesList }) => {
-  const [rotate, setRotate] = useState(false);
-
+const SideBar = ({ notesList, setRotate, rotate }) => {
   const notesTitles = notesList.map((note) => (
     <div className="border border-gray-200 p-5" key={note.id}>
       <h3>{note.title}</h3>
@@ -20,10 +17,7 @@ const SideBar = ({ notesList }) => {
         ease: "easeInOut",
         duration: 0.8,
       }}
-      className=
-           "border border-r-gray-300 h-screen "
-
-
+      className="border border-r-gray-300 h-screen "
     >
       <div className="bg-gray-200 flex items-center justify-between p-5">
         <h1 className="text-black text-2xl font-semibold0">NOTE iT</h1>

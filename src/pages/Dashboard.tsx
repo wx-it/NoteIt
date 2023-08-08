@@ -3,9 +3,12 @@ import { db } from "../config/firebase";
 import { getDocs, collection } from "firebase/firestore";
 import SideBar from "../components/SideBar";
 import Note from "../components/Note";
+import OpenSidebar from "../components/openSidebar";
 
 const Dashboard = () => {
   const [notesList, setNotesList] = useState([]);
+  const [rotate, setRotate] = useState(false);
+
   const notesCollection = collection(db, "notes");
 
   useEffect(() => {
@@ -27,7 +30,8 @@ const Dashboard = () => {
 
   return (
     <div className="flex w-full h-screen">
-      <SideBar notesList={notesList} />
+      {rotate && <OpenSidebar rotate={rotate} setRotate={setRotate} />}
+      <SideBar notesList={notesList} rotate={rotate} setRotate={setRotate} />
       <Note notesList={notesList} />
     </div>
   );
