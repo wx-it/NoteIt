@@ -6,12 +6,18 @@ const SideBar = ({ notesList }) => {
   const [rotate, setRotate] = useState(false);
 
   const notesTitles = notesList.map((note) => (
-    <div key={note.id}>
-      <h3>{note.title}</h3>{" "}
+    <div className="border border-gray-200 p-5" key={note.id}>
+      <h3>{note.title}</h3>
+      <p className="text-gray-400">{note.content.substring(0, 20)}...</p>
     </div>
   ));
   return (
-    <div className="border border-r-gray-300 w-[30%] ">
+    <motion.div
+      initial={{ x: 0 }}
+      animate={{ x: rotate ? -300 : 0 }}
+      transition={{ type: "spring", stiffness: 200, damping: 20 }}
+      className="border border-r-gray-300 w-[30%] "
+    >
       <div className="bg-gray-200 flex items-center justify-between p-5">
         <h1 className="text-black text-2xl font-semibold0">NOTE iT</h1>
         <motion.div
@@ -19,16 +25,16 @@ const SideBar = ({ notesList }) => {
           className="flex flex-col items-center justify-center bg-white p-2 px-4 rounded-md cursor-pointer w-fit"
         >
           <motion.div
-            whileHover={{ scale: 1.1 }}
-            whileTap={{ scale: 0.9 }}
+            whileHover={{ scale: rotate ? 1.1 : 1.1 }}
+            whileTap={{ scale: rotate ? 0.9 : 0 }}
             animate={{ rotate: rotate ? 0 : 180 }}
             className=" text-gray-600"
           >
             <IoIosArrowDown />
           </motion.div>
           <motion.div
-            whileHover={{ scale: 1.1 }}
-            whileTap={{ scale: 0.9 }}
+            whileHover={{ scale: rotate ? 1.1 : 1.1 }}
+            whileTap={{ scale: rotate ? 0.9 : 0 }}
             animate={{ rotate: rotate ? 180 : 0 }}
             className=" text-gray-600"
           >
@@ -37,7 +43,7 @@ const SideBar = ({ notesList }) => {
         </motion.div>
       </div>
       <div>{notesTitles}</div>
-    </div>
+    </motion.div>
   );
 };
 
