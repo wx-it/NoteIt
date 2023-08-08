@@ -10,13 +10,17 @@ const Dashboard = () => {
   const [notesList, setNotesList] = useState<NoteData[]>([]);
   const [rotate, setRotate] = useState(false);
   const [selectedNote, setSelectedNote] = useState<NoteData | null>(null);
-  
+
   const notesCollection = collection(db, "notes");
-  const selectedNoteId = localStorage.getItem("selectedNoteId");
+  const selectedNoteId: string | null = localStorage.getItem("selectedNoteId");
 
   const handleSelectNote = (note: NoteData) => {
     localStorage.setItem("selectedNoteId", note.id);
     setSelectedNote(note);
+  };
+
+  const handleSidebar = () => {
+    setRotate(!rotate);
   };
 
   useEffect(() => {
@@ -45,11 +49,11 @@ const Dashboard = () => {
 
   return (
     <div className="flex w-full h-screen">
-      {rotate && <OpenSidebar rotate={rotate} setRotate={setRotate} />}
+      {rotate && <OpenSidebar handleSidebar={handleSidebar} />}
       <SideBar
         notesList={notesList}
         rotate={rotate}
-        setRotate={setRotate}
+        handleSidebar={handleSidebar}
         onSelectNote={handleSelectNote}
         selectedNoteId={selectedNoteId}
       />

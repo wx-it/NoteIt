@@ -3,15 +3,15 @@ import { motion } from "framer-motion";
 import NoteData from "../noteData";
 interface SidebarProps {
   notesList: NoteData[];
-  setRotate: boolean;
+  handleSidebar: () => void;
   rotate: boolean;
   onSelectNote: (note: NoteData) => void;
-  selectedNoteId: string
+  selectedNoteId: string | null;
 }
 
 const SideBar: React.FC<SidebarProps> = ({
   notesList,
-  setRotate,
+  handleSidebar,
   rotate,
   onSelectNote,
   selectedNoteId,
@@ -45,7 +45,7 @@ const SideBar: React.FC<SidebarProps> = ({
         <h1 className="text-black text-2xl font-semibold0">NOTE iT</h1>
         <motion.div
           whileTap={{ scale: rotate ? 0.9 : 0 }}
-          onClick={() => setRotate(!rotate)}
+          onClick={handleSidebar}
           className="flex flex-col items-center justify-center bg-gray-200 p-2 px-4 rounded-md cursor-pointer w-fit"
         >
           <motion.div
