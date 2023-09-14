@@ -21,8 +21,8 @@ const SideBar: React.FC<SidebarProps> = ({
       key={note.id}
       className={
         selectedNoteId === note.id
-          ? "border border-gray-200 p-5 bg-gray-200 cursor-pointer"
-          : "border border-gray-200 p-5 hover:bg-gray-200 cursor-pointer"
+          ? "border-2 border-t-black border-b-black border-r-black p-5 cursor-pointer"
+          : "border-2 border-gray-100 p-5  cursor-pointer"
       }
       onClick={() => onSelectNote(note)}
     >
@@ -33,26 +33,25 @@ const SideBar: React.FC<SidebarProps> = ({
   return (
     <motion.div
       initial={{ x: 0 }}
-      animate={{ x: rotate ? -3000 : 0, width: rotate ? "0" : "25%" }}
+      animate={{ x: rotate ? -3000 : 0, width: rotate ? "0" : "20%" }}
       transition={{
         type: "tween",
         ease: "easeInOut",
         duration: 1,
       }}
-      className="border border-r-gray-300 h-screen "
+      className="border-2 border-r-gray-300 h-screen"
     >
       <div className=" flex items-center justify-between p-5">
-        <h1 className="text-black text-2xl font-semibold0">NOTE iT</h1>
+        <h1 className="text-black text-2xl font-semibold">NOTE iT</h1>
         <motion.div
-          whileTap={{ scale: rotate ? 0.9 : 0 }}
           onClick={handleSidebar}
-          className="flex flex-col items-center justify-center bg-gray-200 p-2 px-4 rounded-md cursor-pointer w-fit"
+          className="flex flex-col items-center justify-center p-2 px-4 border-2 border-black cursor-pointer w-fit"
         >
           <motion.div
             whileHover={{ scale: rotate ? 1.1 : 1.1 }}
             whileTap={{ scale: rotate ? 0.9 : 0 }}
             animate={{ rotate: rotate ? 0 : 180 }}
-            className=" text-gray-600"
+            className=" text-black"
           >
             <IoIosArrowDown />
           </motion.div>
@@ -60,7 +59,7 @@ const SideBar: React.FC<SidebarProps> = ({
             whileHover={{ scale: rotate ? 1.1 : 1.1 }}
             whileTap={{ scale: rotate ? 0.9 : 0 }}
             animate={{ rotate: rotate ? 180 : 0 }}
-            className=" text-gray-600"
+            className=" text-black"
           >
             <IoIosArrowDown />
           </motion.div>

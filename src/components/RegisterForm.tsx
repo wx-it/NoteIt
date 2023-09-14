@@ -20,6 +20,7 @@ const RegisterForm = () => {
     } catch (err) {
       console.error(err);
     }
+    console.log(auth.currentUser)
   };
 
   const signInWithGoogle = async () => {
@@ -36,7 +37,7 @@ const RegisterForm = () => {
   };
 
   return (
-    <div className="flex flex-col items-center justify-center w-screen h-screen md:w-[50%]">
+    <div className="flex flex-col items-center justify-center w-screen h-screen md:w-[40%]">
       <div className="md:w-[50%] flex items-center justify-center flex-col">
         <div className="text-center">
           <h1 className="text-black text-4xl font-semibold0">NOTE iT</h1>
@@ -51,7 +52,7 @@ const RegisterForm = () => {
           <div className="px-6 w-screen mt-4 md:w-full md:px-0">
             <button
               onClick={signInWithGoogle}
-              className="cursor-pointer w-full px-3.5 py-2 text-lg rounded border border-blue-950 border-opacity-25 justify-center items-center gap-5 inline-flex hover:bg-gray-200 hover:border-gray-200"
+              className="cursor-pointer w-full px-3.5 py-2 text-lg rounded border border-blue-950 border-opacity-25 justify-center items-center gap-5 inline-flex hover:border-black hover:border-2"
             >
               <FcGoogle />
             </button>
@@ -88,7 +89,7 @@ const RegisterForm = () => {
               <span className="text-red-500 text-xs font-medium">*</span>
             </div>
             <input
-              className="w-full text-xs pr-4 pl-3 py-2 rounded-[3px] shadow  border-blue-950 border-opacity-20 border focus:border-black focus:border-opacity-80 focus:outline-none"
+              className=" w-full text-xs pr-4 pl-3 py-2 rounded-[3px]  border-blue-950 border-opacity-20 border focus:shadow-forms focus:border-black focus:border-2 focus:outline-none"
               type="text"
               placeholder="Email"
               onChange={(e) => setEmail(e.target.value)}
@@ -104,7 +105,7 @@ const RegisterForm = () => {
             </div>
             <div className="relative">
               <input
-                className="w-full text-xs pr-4 pl-3 py-2 rounded-[3px] shadow  border-blue-950 border-opacity-20 border focus:border-black focus:border-opacity-80 focus:outline-none"
+                className="w-full text-xs pr-4 pl-3 py-2 rounded-[3px] shadow  border-blue-950 border-opacity-20 border focus:shadow-forms focus:border-black focus:border-2 focus:outline-none"
                 type={text ? "text" : "password"}
                 placeholder="Password"
                 onChange={(e) => setPassword(e.target.value)}
@@ -119,7 +120,7 @@ const RegisterForm = () => {
 
             <button
               onClick={signIn}
-              className=" cursor-pointer w-full px-3.5 py-2 bg-black bg-opacity-80 rounded text-center text-neutral-100 text-base font-semibold mt-6"
+              className=" cursor-pointer w-full px-3.5 py-2 bg-black rounded text-center text-neutral-100 text-base font-semibold mt-6"
             >
               Get Started
             </button>
