@@ -1,6 +1,9 @@
 import { IoIosArrowDown } from "react-icons/io";
 import { motion } from "framer-motion";
 import NoteData from "../noteData";
+import { auth } from "../config/firebase";
+import { BiLogOut } from "react-icons/bi";
+
 interface SidebarProps {
   notesList: NoteData[];
   handleSidebar: () => void;
@@ -33,16 +36,16 @@ const SideBar: React.FC<SidebarProps> = ({
   return (
     <motion.div
       initial={{ x: 0 }}
-      animate={{ x: rotate ? -3000 : 0, width: rotate ? "0" : "20%" }}
+      animate={{ x: rotate ? -3000 : 0, width: rotate ? "0" : "25%" }}
       transition={{
         type: "tween",
         ease: "easeInOut",
         duration: 1,
       }}
-      className="border-2 border-r-gray-300 h-screen"
+      className="border-2 border-r-gray-300 h-screen relative"
     >
-      <div className=" flex items-center justify-between p-5">
-        <h1 className="text-black text-2xl font-semibold">NOTE iT</h1>
+      <div className=" flex items-center justify-between p-3">
+        <h1 className="text-black text-[48px] font-semibold">NOTE iT</h1>
         <motion.div
           onClick={handleSidebar}
           className="flex flex-col items-center justify-center p-2 px-4 border-2 border-black cursor-pointer w-fit"
@@ -66,6 +69,18 @@ const SideBar: React.FC<SidebarProps> = ({
         </motion.div>
       </div>
       <div>{notesTitles}</div>
+
+      <div className="absolute bottom-0 border-2 border-t-black border-r-black w-full p-4 flex items-center justify-between ">
+        <img
+          className="w-[40px] rounded-full"
+          src={auth.currentUser?.photoURL}
+          alt=""
+        />
+        <h3> {auth.currentUser?.displayName} </h3>
+        <div className="text-[20px] text-gray-500 cursor-pointer">
+          <BiLogOut />
+        </div>
+      </div>
     </motion.div>
   );
 };

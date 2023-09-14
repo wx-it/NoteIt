@@ -20,7 +20,6 @@ const RegisterForm = () => {
     } catch (err) {
       console.error(err);
     }
-    console.log(auth.currentUser)
   };
 
   const signInWithGoogle = async () => {
