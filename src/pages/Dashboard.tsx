@@ -57,7 +57,7 @@ const Dashboard = () => {
         onSelectNote={handleSelectNote}
         selectedNoteId={selectedNoteId}
       />
-      <Note selectedNote={selectedNote} />
+      <Note selectedNote={selectedNote} rotate={rotate} />
     </div>
   );
 };

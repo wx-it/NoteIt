@@ -4,7 +4,7 @@ interface NoteContentProps {
   selectedNote: NoteData | null;
 }
 
-const Note: React.FC<NoteContentProps> = ({ selectedNote }) => {
+const Note: React.FC<NoteContentProps> = ({ selectedNote, rotate }) => {
   const [noteTitle, setNoteTitle] = useState<string>("");
 
   const handleNoteChange = (e: React.ChangeEvent<HTMLDivElement>) => {
@@ -31,13 +31,17 @@ const Note: React.FC<NoteContentProps> = ({ selectedNote }) => {
           onBlur={handleBlur}
           onDoubleClick={toggleEdit}
           contentEditable={isEditable}
-          className="text-black text-[32px] font-semibold capitalize focus:outline-none"
+          className={
+            rotate
+              ? "text-black text-[32px] pl-20 font-semibold capitalize focus:outline-none"
+              : "text-black text-[32px] px-8 font-semibold capitalize focus:outline-none"
+          }
         ></h2>
       </div>
       <div
         dangerouslySetInnerHTML={{ __html: selectedNote?.content }}
         contentEditable="true"
-        className="p-12 focus:border-none focus:outline-none "
+        className="md:p-12 p-8 focus:border-none focus:outline-none "
       ></div>
     </div>
   );

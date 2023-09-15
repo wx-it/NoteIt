@@ -52,22 +52,28 @@ const SideBar: React.FC<SidebarProps> = ({
     </div>
   ));
 
+  //small screen detect
+  const isSmallScreen = window.innerWidth <= 768;
+  const isMobileScreen = window.innerWidth <= 500;
+
+
   return (
     <motion.div
       initial={{ x: 0 }}
-      animate={{ x: rotate ? -3000 : 0, width: rotate ? "0" : "25%" }}
+      animate={{ x: rotate ? -3000 : 0, width: rotate ? "0" : isMobileScreen ? "100%": isSmallScreen ? "50%": "25%" }}
+
       transition={{
         type: "tween",
         ease: "easeInOut",
         duration: 1,
       }}
-      className="border-2 border-r-gray-300 h-screen relative"
+      className="border-2 border-r-gray-300 h-screen fixed z-10 bg-white md:relative w-[50%]"
     >
       <div className=" flex items-center justify-between p-3">
-        <h1 className="text-black text-[48px] font-semibold">NOTE iT</h1>
+        <h1 className="text-black text-[5vw] md:text-[3vw] font-semibold">NOTE iT</h1>
         <motion.div
           onClick={handleSidebar}
-          className="flex flex-col items-center justify-center p-2 px-4 border-2 border-black cursor-pointer w-fit"
+          className="flex flex-col items-center justify-center py-[.5vw] px-[2.5vw] md:px-[1.25vw] border-2 border-black cursor-pointer w-fit"
         >
           <motion.div
             whileHover={{ scale: rotate ? 1.1 : 1.1 }}
