@@ -5,21 +5,36 @@ interface NoteContentProps {
 }
 
 const Note: React.FC<NoteContentProps> = ({ selectedNote }) => {
-  const [noteContent, setNoteContent] = useState<string>("");
+  const [noteTitle, setNoteTitle] = useState<string>("");
 
   const handleNoteChange = (e: React.ChangeEvent<HTMLDivElement>) => {
-    setNoteContent(e.target.textContent || "");
+    setNoteTitle(e.target.textContent || "");
+    console.log(noteTitle);
+  };
+
+  const [isEditable, setIsEditable] = useState(false);
+
+  const toggleEdit = () => {
+    setIsEditable(true);
+  };
+
+  const handleBlur = () => {
+    setIsEditable(false);
   };
 
   return (
     <div className="w-screen">
       <div className="border border-b-gray-200 w-full p-5">
-        <h2 className="text-black text-[32px] font-semibold capitalize">
-          {selectedNote?.title}
-        </h2>
+        <h2
+          onInput={handleNoteChange}
+          dangerouslySetInnerHTML={{ __html: selectedNote?.title }}
+          onBlur={handleBlur}
+          onDoubleClick={toggleEdit}
+          contentEditable={isEditable}
+          className="text-black text-[32px] font-semibold capitalize focus:outline-none"
+        ></h2>
       </div>
       <div
-        onInput={handleNoteChange}
         dangerouslySetInnerHTML={{ __html: selectedNote?.content }}
         contentEditable="true"
         className="p-12 focus:border-none focus:outline-none "
