@@ -2,21 +2,20 @@ import { FcGoogle } from "react-icons/fc";
 import { AiOutlineEye, AiFillEye } from "react-icons/ai";
 import { useState } from "react";
 import { auth, googleProvider } from "../config/firebase";
-import {
-  createUserWithEmailAndPassword,
-  signInWithPopup,
-} from "firebase/auth";
-
-//import {Link} from 'react-router-dom'
+import { createUserWithEmailAndPassword, signInWithPopup } from "firebase/auth";
+import { useNavigate } from "react-router-dom";
 
 const RegisterForm = () => {
   const [text, setText] = useState(false);
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
+  const navigate = useNavigate();
+
   const signIn = async () => {
     try {
       await createUserWithEmailAndPassword(auth, email, password);
+      navigate("/dashboard");
     } catch (err) {
       console.error(err);
     }
@@ -25,6 +24,7 @@ const RegisterForm = () => {
   const signInWithGoogle = async () => {
     try {
       await signInWithPopup(auth, googleProvider);
+      navigate("/dashboard");
     } catch (err) {
       console.error(err);
     }

@@ -5,6 +5,8 @@ import { auth } from "../config/firebase";
 import { BiLogOut } from "react-icons/bi";
 import SearchAndAdd from "./SearchAndAdd";
 import { useEffect, useState } from "react";
+import { signOut } from "firebase/auth";
+import { useNavigate } from 'react-router-dom';
 
 interface SidebarProps {
   notesList: NoteData[];
@@ -57,6 +59,18 @@ const SideBar: React.FC<SidebarProps> = ({
   const isMobileScreen = window.innerWidth <= 500;
 
 
+  //logout from account 
+  const navigate = useNavigate();
+ 
+  const handleLogout = () => {               
+      signOut(auth).then(() => {
+          navigate("/");
+          console.log("Signed out successfully")
+      }).catch((error) => {
+      // An error happened.
+      });
+  }
+
   return (
     <motion.div
       initial={{ x: 0 }}
@@ -103,9 +117,9 @@ const SideBar: React.FC<SidebarProps> = ({
           alt=""
         />
         <h3> {auth.currentUser?.displayName} </h3>
-        <div className="text-[20px] text-gray-500 cursor-pointer">
+        <button onClick={handleLogout} className="text-[20px] text-gray-500 cursor-pointer">
           <BiLogOut />
-        </div>
+        </button>
       </div>
     </motion.div>
   );
