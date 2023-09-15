@@ -3,9 +3,12 @@ import { motion } from "framer-motion";
 import NoteData from "../noteData";
 import { auth } from "../config/firebase";
 import { BiLogOut } from "react-icons/bi";
+import SearchAndAdd from "./SearchAndAdd";
+import { useEffect, useState } from "react";
 
 interface SidebarProps {
   notesList: NoteData[];
+  filteredNotes: NoteData[];
   handleSidebar: () => void;
   rotate: boolean;
   onSelectNote: (note: NoteData) => void;
@@ -19,13 +22,28 @@ const SideBar: React.FC<SidebarProps> = ({
   onSelectNote,
   selectedNoteId,
 }) => {
-  const notesTitles = notesList.map((note) => (
+  //search for notes
+  const [search, setSearch] = useState("");
+  const [filteredNotes, setFilteredNotes] = useState([]);
+
+  // Inside your NotesList component
+  useEffect(() => {
+    // Filter notes based on the search query
+    const filtered = notesList.filter((note) => {
+      const searchRegex = new RegExp(search, "i"); // Case-insensitive search
+      return searchRegex.test(note.title) || searchRegex.test(note.content);
+    });
+    setFilteredNotes(filtered);
+  }, [search, notesList]);
+
+  //get all notes titles
+  const notesTitles = filteredNotes.map((note) => (
     <div
       key={note.id}
       className={
         selectedNoteId === note.id
           ? "border-2 border-t-black border-b-black border-r-black p-5 cursor-pointer"
-          : "border-2 border-gray-100 p-5  cursor-pointer"
+          : "border border-t-gray-100 border-b-gray-100 border-r-gray-100 p-5  cursor-pointer"
       }
       onClick={() => onSelectNote(note)}
     >
@@ -33,6 +51,7 @@ const SideBar: React.FC<SidebarProps> = ({
       <p className="text-gray-400">{note.content.substring(0, 20)}...</p>
     </div>
   ));
+
   return (
     <motion.div
       initial={{ x: 0 }}
@@ -68,6 +87,7 @@ const SideBar: React.FC<SidebarProps> = ({
           </motion.div>
         </motion.div>
       </div>
+      <SearchAndAdd search={search} setSearch={setSearch} />
       <div>{notesTitles}</div>
 
       <div className="absolute bottom-0 border-2 border-t-black border-r-black w-full p-4 flex items-center justify-between ">
