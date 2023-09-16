@@ -23,6 +23,7 @@ const SideBar: React.FC<SidebarProps> = ({
   rotate,
   onSelectNote,
   selectedNoteId,
+  addNote
 }) => {
   //search for notes
   const [search, setSearch] = useState("");
@@ -50,7 +51,7 @@ const SideBar: React.FC<SidebarProps> = ({
       onClick={() => onSelectNote(note)}
     >
       <h3>{note.title}</h3>
-      <p className="text-gray-400">{note.content.substring(0, 20)}...</p>
+      <p className="text-gray-400">{note.content?.substring(0, 20)}...</p>
     </div>
   ));
 
@@ -107,7 +108,7 @@ const SideBar: React.FC<SidebarProps> = ({
           </motion.div>
         </motion.div>
       </div>
-      <SearchAndAdd search={search} setSearch={setSearch} />
+      <SearchAndAdd search={search} setSearch={setSearch} addNote={addNote}  />
       <div>{notesTitles}</div>
 
       <div className="absolute bottom-0 border-2 border-t-black border-r-black w-full p-4 flex items-center justify-between ">
