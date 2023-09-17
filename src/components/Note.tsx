@@ -4,14 +4,13 @@ interface NoteContentProps {
   selectedNote: NoteData | null;
 }
 
-const Note: React.FC<NoteContentProps> = ({ selectedNote, rotate }) => {
-  const [noteTitle, setNoteTitle] = useState<string>("");
-
-  const handleNoteChange = (e: React.ChangeEvent<HTMLDivElement>) => {
-    setNoteTitle(e.target.textContent || "");
-    console.log(noteTitle);
-  };
-
+const Note: React.FC<NoteContentProps> = ({
+  selectedNote,
+  rotate,
+  setNoteTitle,
+  setContent,
+  deleteNote,
+}) => {
   const [isEditable, setIsEditable] = useState(false);
 
   const toggleEdit = () => {
@@ -26,7 +25,7 @@ const Note: React.FC<NoteContentProps> = ({ selectedNote, rotate }) => {
     <div className="w-screen">
       <div className="border border-b-gray-200 w-full p-5">
         <h2
-          onInput={handleNoteChange}
+          onInput={(e) => setNoteTitle(e.target.textContent || "")}
           dangerouslySetInnerHTML={{ __html: selectedNote?.title }}
           onBlur={handleBlur}
           onDoubleClick={toggleEdit}
@@ -37,8 +36,11 @@ const Note: React.FC<NoteContentProps> = ({ selectedNote, rotate }) => {
               : "text-black text-[32px] px-8 font-semibold capitalize focus:outline-none"
           }
         ></h2>
+
+        <button onClick={() => deleteNote(selectedNote?.id)}>delete</button>
       </div>
       <div
+        onInput={(e) => setContent(e.target.textContent || "")}
         dangerouslySetInnerHTML={{ __html: selectedNote?.content }}
         contentEditable="true"
         className="md:p-12 p-8 focus:border-none focus:outline-none "

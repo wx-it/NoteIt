@@ -7,6 +7,9 @@ import {
   query,
   where,
   onSnapshot,
+  updateDoc,
+  deleteDoc,
+  doc,
 } from "firebase/firestore";
 import SideBar from "../components/SideBar";
 import Note from "../components/Note";
@@ -18,6 +21,10 @@ const Dashboard = () => {
   const [notesList, setNotesList] = useState<NoteData[]>([]);
   const [rotate, setRotate] = useState(false);
   const [selectedNote, setSelectedNote] = useState<NoteData | null>(null);
+
+  //inline edits
+  const [noteTitle, setNoteTitle] = useState<string>("");
+  const [content, setContent] = useState("");
 
   const notesCollection = collection(db, "notes");
   const selectedNoteId: string | null = localStorage.getItem("selectedNoteId");
@@ -71,43 +78,25 @@ const Dashboard = () => {
           where("userId", "==", user.uid)
         );
 
-        //     getDocs(userNotesQuery)
-        //       .then((querySnapshot) => {
-        //         const notesData = [];
-        //         querySnapshot.forEach((doc) => {
-        //           notesData.push({ id: doc.id, ...doc.data() });
-        //         });
-        //         setNotesList(notesData);
-        //       })
-        //       .catch((error) => {
-        //         console.error("Error fetching notes: ", error);
-        //       });
-        //   } else {
-        //     setUser(null);
-        //     setNotesList([]);
-        //   }
-        getDocs(userNotesQuery)
-          .then((querySnapshot) => {
-            const notesData = [];
-            querySnapshot.forEach((doc) => {
-              notesData.push({ id: doc.id, ...doc.data() });
-            });
-            setNotesList(notesData);
-          })
-          .catch((error) => {
-            console.error("Error fetching notes: ", error);
+        const unsubscribeNotes = onSnapshot(userNotesQuery, (snapshot) => {
+          const notesData: { id: string }[] = [];
+          snapshot.forEach((doc) => {
+            notesData.push({ id: doc.id, ...doc.data() });
           });
+          setNotesList(notesData);
+        });
+
+        return () => unsubscribeNotes();
       } else {
         setUser(null);
         setNotesList([]);
       }
-      console.log(notesList);
-      return () => unsubscribe();
     });
+    return () => unsubscribe();
   }, []);
 
   //add new note
-  const createNote = async (newNote) => {
+  const createNote = async (newNote: { title: string }) => {
     try {
       const currentUser = auth.currentUser;
       if (!currentUser) {
@@ -123,8 +112,14 @@ const Dashboard = () => {
     } catch (error) {
       console.error("Error creating note:", error);
     }
-    console.log(getDocs(notesCollection))
-  };  
+    //console.log(getDocs(notesCollection));
+  };
+
+  //delete note
+  const deleteNote = async (id) => {
+    const noteDoc = doc(db, "notes", id);
+    await deleteDoc(noteDoc);
+  };
 
   return (
     <div className="flex w-full h-screen">
@@ -137,7 +132,13 @@ const Dashboard = () => {
         selectedNoteId={selectedNoteId}
         addNote={createNote}
       />
-      <Note selectedNote={selectedNote} rotate={rotate} />
+      <Note
+        selectedNote={selectedNote}
+        rotate={rotate}
+        setNoteTitle={setNoteTitle}
+        setContent={setContent}
+        deleteNote={deleteNote}
+      />
     </div>
   );
 };

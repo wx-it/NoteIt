@@ -82,9 +82,9 @@ const SideBar: React.FC<SidebarProps> = ({
         ease: "easeInOut",
         duration: 1,
       }}
-      className="border-2 border-r-gray-300 h-screen fixed z-10 bg-white md:relative w-[50%]"
+      className="md:border-r-2 md:border-r-gray-300 h-screen fixed z-10 bg-white md:relative w-[50%] flex items-start justify-between flex-col "
     >
-      <div className=" flex items-center justify-between p-3">
+      <div className=" flex items-center justify-between p-3 w-full">
         <h1 className="text-black text-[5vw] md:text-[3vw] font-semibold">NOTE iT</h1>
         <motion.div
           onClick={handleSidebar}
@@ -109,9 +109,9 @@ const SideBar: React.FC<SidebarProps> = ({
         </motion.div>
       </div>
       <SearchAndAdd search={search} setSearch={setSearch} addNote={addNote}  />
-      <div>{notesTitles}</div>
+      <div className=" overflow-y-auto md:max-h-[50vw] w-full" >{notesTitles}</div>
 
-      <div className="absolute bottom-0 border-2 border-t-black border-r-black w-full p-4 flex items-center justify-between ">
+      <div className=" border-2 border-t-black border-r-black w-full p-4 flex items-center justify-between bg-white z-10 ">
         <img
           className="w-[40px] rounded-full"
           src={auth.currentUser?.photoURL}

@@ -15,7 +15,7 @@ const SearchAndAdd = ({ search, setSearch, addNote }) => {
   };
 
   return (
-    <div>
+    <div className=" w-full" >
       <div className="flex items-center justify-center gap-3 py-6 px-2 border border-t-neutral-400 border-b-neutral-400 ">
         <input
           type="text"
