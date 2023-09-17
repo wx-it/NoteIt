@@ -121,6 +121,17 @@ const Dashboard = () => {
     await deleteDoc(noteDoc);
   };
 
+  //update note
+  const updateNoteTitle = async (id, newTitle) => {
+    const noteDoc = doc(db, "notes", id);
+    await updateDoc(noteDoc, { title: newTitle});
+  };
+
+  const updateNoteContent = async (id, newContent) => {
+    const noteDoc = doc(db, "notes", id);
+    await updateDoc(noteDoc, { content: newContent});
+  };
+
   return (
     <div className="flex w-full h-screen">
       {rotate && <OpenSidebar handleSidebar={handleSidebar} />}
@@ -138,6 +149,8 @@ const Dashboard = () => {
         setNoteTitle={setNoteTitle}
         setContent={setContent}
         deleteNote={deleteNote}
+        updateNoteTitle={updateNoteTitle}
+        updateNoteContent={updateNoteContent}
       />
     </div>
   );

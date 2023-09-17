@@ -10,6 +10,8 @@ const Note: React.FC<NoteContentProps> = ({
   setNoteTitle,
   setContent,
   deleteNote,
+  updateNoteTitle,
+  updateNoteContent,
 }) => {
   const [isEditable, setIsEditable] = useState(false);
 
@@ -25,10 +27,15 @@ const Note: React.FC<NoteContentProps> = ({
     <div className="w-screen">
       <div className="border border-b-gray-200 w-full p-5">
         <h2
-          onInput={(e) => setNoteTitle(e.target.textContent || "")}
+          onInput={(e) => {
+            const newTitle= e.target.textContent
+            setNoteTitle(newTitle);
+            updateNoteTitle(selectedNote?.id, newTitle)
+          }}
+         // onChange={() => updateNoteTitle(selectedNote?.id)}
           dangerouslySetInnerHTML={{ __html: selectedNote?.title }}
-          onBlur={handleBlur}
-          onDoubleClick={toggleEdit}
+          onBlur={ handleBlur }
+          onClick={toggleEdit}
           contentEditable={isEditable}
           className={
             rotate
@@ -40,7 +47,11 @@ const Note: React.FC<NoteContentProps> = ({
         <button onClick={() => deleteNote(selectedNote?.id)}>delete</button>
       </div>
       <div
-        onInput={(e) => setContent(e.target.textContent || "")}
+        onInput={(e) => {
+          const newContent= e.target.textContent;
+          setContent(newContent);
+          updateNoteContent(selectedNote?.id, newContent);
+        }}
         dangerouslySetInnerHTML={{ __html: selectedNote?.content }}
         contentEditable="true"
         className="md:p-12 p-8 focus:border-none focus:outline-none "
