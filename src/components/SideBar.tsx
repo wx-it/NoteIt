@@ -51,7 +51,7 @@ const SideBar: React.FC<SidebarProps> = ({
       onClick={() => onSelectNote(note)}
     >
       <h3>{note.title}</h3>
-      <p className="text-gray-400">{note.content?.substring(0, 20)}...</p>
+      {/* <p className="text-gray-400">{note.content?.substring(0, 20)}...</p> */}
     </div>
   ));
 
@@ -60,10 +60,10 @@ const SideBar: React.FC<SidebarProps> = ({
   const isMobileScreen = window.innerWidth <= 500;
 
 
-  //logout from account 
+  //logout from account
   const navigate = useNavigate();
- 
-  const handleLogout = () => {               
+
+  const handleLogout = () => {
       signOut(auth).then(() => {
           navigate("/");
           console.log("Signed out successfully")
@@ -82,9 +82,9 @@ const SideBar: React.FC<SidebarProps> = ({
         ease: "easeInOut",
         duration: 1,
       }}
-      className="md:border-r-2 md:border-r-gray-300 h-screen fixed z-10 bg-white md:relative w-[50%] flex items-start justify-between flex-col "
+      className="md:border-r-2 md:border-r-gray-300 h-screen fixed z-10 bg-white md:sticky md:top-0 w-[50%] flex items-start justify-between flex-col "
     >
-      <div>
+      <div className="w-full" >
       <div className=" flex items-center justify-between p-3 w-full">
         <h1 className="text-black text-[5vw] md:text-[3vw] font-semibold">NOTE iT</h1>
         <motion.div
@@ -110,7 +110,7 @@ const SideBar: React.FC<SidebarProps> = ({
         </motion.div>
       </div>
       <SearchAndAdd search={search} setSearch={setSearch} addNote={addNote}  />
-      <div className=" overflow-y-auto md:max-h-[70vh] w-full" >{notesTitles}</div>
+      <div className=" overflow-y-auto max-h-[70vh] w-full" >{notesTitles}</div>
 
       </div>
       <div className=" border-2 border-t-black border-r-black w-full p-4 flex items-center justify-between bg-white z-10 ">

@@ -133,7 +133,7 @@ const Dashboard = () => {
   };
 
   return (
-    <div className="flex w-full h-screen">
+    <div className="flex w-full h-full">
       {rotate && <OpenSidebar handleSidebar={handleSidebar} />}
       <SideBar
         notesList={notesList}

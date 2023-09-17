@@ -1,5 +1,6 @@
 import NoteData from "../noteData";
 import { useState } from "react";
+import {AiOutlineDelete} from "react-icons/ai"
 interface NoteContentProps {
   selectedNote: NoteData | null;
 }
@@ -25,7 +26,7 @@ const Note: React.FC<NoteContentProps> = ({
 
   return (
     <div className="w-screen">
-      <div className="border border-b-gray-200 w-full p-5">
+      <div className="border border-b-gray-200 w-full p-5 flex items-center justify-between">
         <h2
           onInput={(e) => {
             const newTitle= e.target.textContent
@@ -39,12 +40,12 @@ const Note: React.FC<NoteContentProps> = ({
           contentEditable={isEditable}
           className={
             rotate
-              ? "text-black text-[32px] pl-20 font-semibold capitalize focus:outline-none"
-              : "text-black text-[32px] px-8 font-semibold capitalize focus:outline-none"
+              ? "text-black md:text-[32px] text-[20px] pl-20 font-semibold capitalize focus:outline-none"
+              : "text-black md:text-[32px] text-[20px] px-8 font-semibold capitalize focus:outline-none"
           }
         ></h2>
 
-        <button onClick={() => deleteNote(selectedNote?.id)}>delete</button>
+        <button onClick={() => deleteNote(selectedNote?.id)}> <AiOutlineDelete/> </button>
       </div>
       <div
         onInput={(e) => {
