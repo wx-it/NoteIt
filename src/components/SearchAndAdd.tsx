@@ -11,7 +11,6 @@ const SearchAndAdd = ({ search, setSearch, addNote }) => {
     addNote({ title });
     setTitle("");
     setNewNote(!newNote);
-    console.log(title)
   };
 
   return (

@@ -34,6 +34,23 @@ const Dashboard = () => {
     setSelectedNote(note);
   };
 
+  //keep last note open
+
+  useEffect(() => {
+    // Retrieve the last opened note ID from localStorage
+    const lastOpenedNoteId = localStorage.getItem('selectedNoteId');
+
+    if (lastOpenedNoteId) {
+      const lastOpenedNote = notesList.find((note) => note.id === lastOpenedNoteId);
+
+      if (lastOpenedNote) {
+        setSelectedNote(lastOpenedNote);
+      } 
+    }
+  }, [notesList]);  
+
+
+  
   const handleSidebar = () => {
     setRotate(!rotate);
   };
@@ -144,7 +161,9 @@ const Dashboard = () => {
         addNote={createNote}
       />
       <Note
+      
         selectedNote={selectedNote}
+        notesList={notesList}
         rotate={rotate}
         setNoteTitle={setNoteTitle}
         setContent={setContent}

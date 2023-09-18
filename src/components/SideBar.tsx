@@ -6,7 +6,7 @@ import { BiLogOut } from "react-icons/bi";
 import SearchAndAdd from "./SearchAndAdd";
 import { useEffect, useState } from "react";
 import { signOut } from "firebase/auth";
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, NavLink } from 'react-router-dom';
 
 interface SidebarProps {
   notesList: NoteData[];
@@ -46,7 +46,7 @@ const SideBar: React.FC<SidebarProps> = ({
       className={
         selectedNoteId === note.id
           ? "border-2 border-t-black border-b-black border-r-black p-5 cursor-pointer"
-          : "border border-t-gray-100 border-b-gray-100 border-r-gray-100 p-5  cursor-pointer"
+          : "border-b border-b-gray-300 border-r-gray-100 p-5  cursor-pointer"
       }
       onClick={() => onSelectNote(note)}
     >
