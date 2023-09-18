@@ -37,50 +37,25 @@ const Dashboard = () => {
   //keep last note open
 
   useEffect(() => {
-    // Retrieve the last opened note ID from localStorage
-    const lastOpenedNoteId = localStorage.getItem('selectedNoteId');
+    const lastOpenedNoteId = localStorage.getItem("selectedNoteId");
 
     if (lastOpenedNoteId) {
-      const lastOpenedNote = notesList.find((note) => note.id === lastOpenedNoteId);
+      const lastOpenedNote = notesList.find(
+        (note) => note.id === lastOpenedNoteId
+      );
 
       if (lastOpenedNote) {
         setSelectedNote(lastOpenedNote);
-      } 
+      }
     }
-  }, [notesList]);  
+  }, [notesList]);
 
-
-  
   const handleSidebar = () => {
     setRotate(!rotate);
   };
 
   //get the users notes
   const [user, setUser] = useState<string | null>(null);
-
-  // useEffect(() => {
-  //   const getNotesList = async () => {
-  //     try {
-  //       const data = await getDocs(notesCollection);
-  //       const filteredData = data.docs.map((doc) => ({
-  //         id: doc.id,
-  //         ...doc.data(),
-  //       })) as NoteData[];
-  //       setNotesList(filteredData);
-  //       //console.log(notesList)
-  //     } catch (err) {
-  //       console.error(err);
-  //     }
-  //   };
-  //   getNotesList();
-
-  //   if (selectedNoteId) {
-  //     const storedNote = notesList.find((note) => note.id === selectedNoteId);
-  //     if (storedNote) {
-  //       setSelectedNote(storedNote);
-  //     }
-  //   }
-  // }, [notesList, notesCollection, selectedNoteId]);
 
   useEffect(() => {
     // Check if the user is authenticated
@@ -122,14 +97,21 @@ const Dashboard = () => {
 
       const notesCollection = collection(db, "notes");
 
-      await addDoc(notesCollection, {
+      const docRef = await addDoc(notesCollection, {
         userId: currentUser.uid,
         title: newNote.title,
       });
+
+      const newNoteWithId = {
+        id: docRef.id,
+        userId: currentUser.uid,
+        title: newNote.title,
+      };
+
+      setNotesList([newNoteWithId, ...notesList]);
     } catch (error) {
       console.error("Error creating note:", error);
     }
-    //console.log(getDocs(notesCollection));
   };
 
   //delete note
@@ -141,12 +123,12 @@ const Dashboard = () => {
   //update note
   const updateNoteTitle = async (id, newTitle) => {
     const noteDoc = doc(db, "notes", id);
-    await updateDoc(noteDoc, { title: newTitle});
+    await updateDoc(noteDoc, { title: newTitle });
   };
 
   const updateNoteContent = async (id, newContent) => {
     const noteDoc = doc(db, "notes", id);
-    await updateDoc(noteDoc, { content: newContent});
+    await updateDoc(noteDoc, { content: newContent });
   };
 
   return (
@@ -161,7 +143,6 @@ const Dashboard = () => {
         addNote={createNote}
       />
       <Note
-      
         selectedNote={selectedNote}
         notesList={notesList}
         rotate={rotate}

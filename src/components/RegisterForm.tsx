@@ -36,7 +36,7 @@ const RegisterForm = () => {
   };
 
   return (
-    <div className="flex flex-col items-center justify-center w-screen h-screen md:w-[40%]">
+    <div className="flex flex-col items-center justify-center w-screen h-screen md:w-[50%]">
       <div className="md:w-[50%] flex items-center justify-center flex-col">
         <div className="text-center">
           <h1 className="text-black text-4xl font-semibold0">NOTE iT</h1>

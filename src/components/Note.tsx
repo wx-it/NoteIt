@@ -32,8 +32,6 @@ useEffect(()=>{
   }else{
     setOpen(false)
   }
-  console.log(notesList.length)
-
 },[notesList])
 
   return (

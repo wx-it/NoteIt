@@ -29,9 +29,7 @@ const SideBar: React.FC<SidebarProps> = ({
   const [search, setSearch] = useState("");
   const [filteredNotes, setFilteredNotes] = useState([]);
 
-  // Inside your NotesList component
   useEffect(() => {
-    // Filter notes based on the search query
     const filtered = notesList.filter((note) => {
       const searchRegex = new RegExp(search, "i"); // Case-insensitive search
       return searchRegex.test(note.title) || searchRegex.test(note.content);
@@ -51,7 +49,6 @@ const SideBar: React.FC<SidebarProps> = ({
       onClick={() => onSelectNote(note)}
     >
       <h3>{note.title}</h3>
-      {/* <p className="text-gray-400">{note.content?.substring(0, 20)}...</p> */}
     </div>
   ));
 
@@ -66,9 +63,7 @@ const SideBar: React.FC<SidebarProps> = ({
   const handleLogout = () => {
       signOut(auth).then(() => {
           navigate("/");
-          console.log("Signed out successfully")
       }).catch((error) => {
-      // An error happened.
       });
   }
 
