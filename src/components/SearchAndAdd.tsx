@@ -1,10 +1,11 @@
 import { useState } from "react";
 import { IoMdAdd } from "react-icons/io";
+import { motion } from "framer-motion";
+import { AnimatePresence } from "framer-motion";
 
 const SearchAndAdd = ({ search, setSearch, addNote }) => {
   const [newNote, setNewNote] = useState(false);
   const [title, setTitle] = useState("");
-
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -14,7 +15,7 @@ const SearchAndAdd = ({ search, setSearch, addNote }) => {
   };
 
   return (
-    <div className=" w-full" >
+    <motion.div className=" w-full">
       <div className="flex items-center justify-center gap-3 py-6 px-2 border border-t-neutral-400 border-b-neutral-400 ">
         <input
           type="text"
@@ -33,7 +34,16 @@ const SearchAndAdd = ({ search, setSearch, addNote }) => {
         </button>
       </div>
       {newNote && (
-        <div className="w-full flex items-center justify-center flex-col p-4">
+        <motion.div
+          initial={{ opacity: 0, x: -30 }}
+          animate={{ opacity: 1, x: 0 }}
+          exit={{ opacity: 0, x: -30 }}
+          transition={{
+            type: "spring",
+            duration: 0.5,
+          }}
+          className="w-full flex items-center justify-center flex-col p-4"
+        >
           <input
             type="text"
             placeholder="Title"
@@ -43,22 +53,36 @@ const SearchAndAdd = ({ search, setSearch, addNote }) => {
             required
           />
           <div className="flex items-center justify-end w-full gap-2 py-4">
-            <button
+            <motion.button
+              whileHover={{ scale: 1.05, x: 0 }}
+              whileTap={{ scale: 0, x: 0 }}
+              transition={{
+                type: "tween",
+                ease: "easeInOut",
+                duration: .5,
+              }}
               onClick={() => setNewNote(!newNote)}
               className="border-2 border-black py-1 px-3 rounded-md bg-white"
             >
               Cancel
-            </button>
-            <button
+            </motion.button>
+            <motion.button
+              whileHover={{ scale: 1.05, x: 0 }}
+              whileTap={{ scale: 0, x: 0 }}
+              transition={{
+                type: "tween",
+                ease: "easeInOut",
+                duration: .5,
+              }}
               onClick={handleSubmit}
               className="border-2 border-black py-1 px-3 rounded-md text-white bg-black"
             >
               Save
-            </button>
+            </motion.button>
           </div>
-        </div>
+        </motion.div>
       )}
-    </div>
+    </motion.div>
   );
 };
 

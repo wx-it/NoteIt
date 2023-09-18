@@ -64,6 +64,7 @@ const SideBar: React.FC<SidebarProps> = ({
       signOut(auth).then(() => {
           navigate("/");
       }).catch((error) => {
+        console.log(error)
       });
   }
 

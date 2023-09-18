@@ -4,6 +4,7 @@ import { useState } from "react";
 import { auth, googleProvider } from "../config/firebase";
 import { createUserWithEmailAndPassword, signInWithPopup } from "firebase/auth";
 import { useNavigate } from "react-router-dom";
+import { motion } from "framer-motion";
 
 const RegisterForm = () => {
   const [text, setText] = useState(false);
@@ -49,12 +50,22 @@ const RegisterForm = () => {
             </p>
           </div>
           <div className="px-6 w-screen mt-4 md:w-full md:px-0">
-            <button
+            <motion.button
+              whileHover={{
+                boxShadow: "0px 0px 0px 2px #000",
+                border: "2px black solid",
+              }}
+              whileTap={{ scale: 0, x: 0 }}
+              transition={{
+                type: "tween",
+                ease: "easeInOut",
+                duration: 1,
+              }}
               onClick={signInWithGoogle}
-              className="cursor-pointer w-full px-3.5 py-2 text-lg rounded border border-blue-950 border-opacity-25 justify-center items-center gap-5 inline-flex hover:border-black hover:border-2"
+              className="cursor-pointer w-full px-3.5 py-2 text-lg rounded border border-blue-950 border-opacity-25 justify-center items-center gap-5 inline-flex"
             >
               <FcGoogle />
-            </button>
+            </motion.button>
           </div>
         </div>
         <div className="flex w-full items-center justify-center gap-4 my-4 px-6 md:px-0">
@@ -66,20 +77,6 @@ const RegisterForm = () => {
         </div>
 
         <div className="w-full px-6 space-y-4 md:px-0">
-          {/* <div>
-            <div className="">
-              <span className="text-black text-opacity-80 text-xs font-medium">
-                Full Name
-              </span>
-              <span className="text-red-500 text-xs font-medium">*</span>
-            </div>
-            <input
-              className="w-full text-xs pr-4 pl-3 py-2 rounded-[3px] shadow  border-blue-950 border-opacity-20 border focus:border-black focus:border-opacity-80 focus:outline-none"
-              type="text"
-              placeholder="Full Name"
-            />
-          </div> */}
-
           <div className="">
             <div className="">
               <span className="text-black text-opacity-80 text-xs font-medium">
@@ -87,11 +84,21 @@ const RegisterForm = () => {
               </span>
               <span className="text-red-500 text-xs font-medium">*</span>
             </div>
-            <input
-              className=" w-full text-xs pr-4 pl-3 py-2 rounded-[3px]  border-blue-950 border-opacity-20 border focus:shadow-forms focus:border-black focus:border-2 focus:outline-none"
+            <motion.input
+              whileFocus={{
+                boxShadow: "0px 2px 0px 2px #000",
+                border: "2px black solid",
+              }}
+              //  whileTap={{ scale: 0, x: 0 }}
+              transition={{
+                type: "spring",
+                duration: 1,
+              }}
+              className=" w-full text-xs pr-4 pl-3 py-2 rounded-[3px]  border-blue-950 border-opacity-20 border focus:outline-none"
               type="text"
               placeholder="Email"
               onChange={(e) => setEmail(e.target.value)}
+              required
             />
           </div>
 
@@ -103,14 +110,24 @@ const RegisterForm = () => {
               <span className="text-red-500 text-xs font-medium">*</span>
             </div>
             <div className="relative">
-              <input
-                className="w-full text-xs pr-4 pl-3 py-2 rounded-[3px] shadow  border-blue-950 border-opacity-20 border focus:shadow-forms focus:border-black focus:border-2 focus:outline-none"
+              <motion.input
+                whileFocus={{
+                  boxShadow: "0px 2px 0px 2px #000",
+                  border: "2px black solid",
+                }}
+                //  whileTap={{ scale: 0, x: 0 }}
+                transition={{
+                  type: "spring",
+                  duration: 1,
+                }}
+                className=" w-full text-xs pr-4 pl-3 py-2 rounded-[3px]  border-blue-950 border-opacity-20 border focus:outline-none"
                 type={text ? "text" : "password"}
                 placeholder="Password"
                 onChange={(e) => setPassword(e.target.value)}
+                required
               />
               <div
-                className="absolute right-2 top-2 text-gray-500 cursor-pointer"
+                className="absolute right-2 top-2 text-black cursor-pointer"
                 onClick={switchType}
               >
                 {text ? <AiFillEye /> : <AiOutlineEye />}
