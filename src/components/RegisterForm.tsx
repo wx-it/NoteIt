@@ -2,23 +2,55 @@ import { FcGoogle } from "react-icons/fc";
 import { AiOutlineEye, AiFillEye } from "react-icons/ai";
 import { useState } from "react";
 import { auth, googleProvider } from "../config/firebase";
-import { createUserWithEmailAndPassword, signInWithPopup } from "firebase/auth";
+import {
+  createUserWithEmailAndPassword,
+  signInWithPopup,
+  getAuth,
+  AuthErrorCodes,
+} from "firebase/auth";
+
+import { AuthError } from "firebase/auth";
 import { useNavigate } from "react-router-dom";
 import { motion } from "framer-motion";
+import { useForm } from "react-hook-form";
 
 const RegisterForm = () => {
   const [text, setText] = useState(false);
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [emailError, setEmailError] = useState(null);
+  const [passwordError, setPasswordError] = useState(null);
+
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm();
 
   const navigate = useNavigate();
+
+  const auth = getAuth();
 
   const signIn = async () => {
     try {
       await createUserWithEmailAndPassword(auth, email, password);
       navigate("/dashboard");
-    } catch (err) {
-      console.error(err);
+    } catch (error) {
+      console.log(error);
+      if (error.code === "auth/missing-password") {
+        setPasswordError("Missing password");
+      }
+      if (error.code === "auth/weak-password") {
+        setPasswordError("Password should be at least 6 characters");
+      }
+
+      if (error.code === "auth/email-already-in-use") {
+        setEmailError("Email already in use, please log in instead");
+      }
+
+      if (error.code === "auth/invalid-email") {
+        setEmailError("Invalide email");
+      }
     }
   };
 
@@ -76,7 +108,10 @@ const RegisterForm = () => {
           <div className="w-full md:w-screen h-[0px] border border-blue-950 border-opacity-25"></div>
         </div>
 
-        <div className="w-full px-6 space-y-4 md:px-0">
+        <form
+          onSubmit={handleSubmit((data) => console.log(data))}
+          className="w-full px-6 space-y-4 md:px-0"
+        >
           <div className="">
             <div className="">
               <span className="text-black text-opacity-80 text-xs font-medium">
@@ -97,9 +132,12 @@ const RegisterForm = () => {
               className=" w-full text-xs pr-4 pl-3 py-2 rounded-[3px]  border-blue-950 border-opacity-20 border focus:outline-none"
               type="text"
               placeholder="Email"
+              {...register("email", { required: true })}
               onChange={(e) => setEmail(e.target.value)}
-              required
             />
+            {emailError && (
+              <span className="text-xs text-red-700">{emailError}</span>
+            )}
           </div>
 
           <div className="">
@@ -123,8 +161,8 @@ const RegisterForm = () => {
                 className=" w-full text-xs pr-4 pl-3 py-2 rounded-[3px]  border-blue-950 border-opacity-20 border focus:outline-none"
                 type={text ? "text" : "password"}
                 placeholder="Password"
+                {...register("passwordt", { required: true })}
                 onChange={(e) => setPassword(e.target.value)}
-                required
               />
               <div
                 className="absolute right-2 top-2 text-black cursor-pointer"
@@ -132,6 +170,9 @@ const RegisterForm = () => {
               >
                 {text ? <AiFillEye /> : <AiOutlineEye />}
               </div>
+              {passwordError && (
+                <span className="text-xs text-red-700">{passwordError}</span>
+              )}
             </div>
 
             <button
@@ -149,7 +190,7 @@ const RegisterForm = () => {
               Log in
             </a>
           </div>
-        </div>
+        </form>
       </div>
     </div>
   );
