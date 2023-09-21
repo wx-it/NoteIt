@@ -44,7 +44,7 @@ const SideBar: React.FC<SidebarProps> = ({
       className={
         selectedNoteId === note.id
           ? "border-2 border-t-black border-b-black border-r-black p-5 cursor-pointer"
-          : "border-b border-b-gray-300 border-r-gray-100 p-5  cursor-pointer"
+          : "border-b border-b-gray-300 border-r-gray-100 p-5 cursor-pointer"
       }
       onClick={() => onSelectNote(note)}
     >

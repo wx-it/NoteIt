@@ -123,13 +123,13 @@ const Dashboard = () => {
   //update note
   const updateNoteTitle = async (id, newTitle) => {
     const noteDoc = doc(db, "notes", id);
-    await updateDoc(noteDoc, { title: newTitle });
+    const decodedTitle = new DOMParser().parseFromString(newTitle, "text/html").body.textContent;
+    await updateDoc(noteDoc, { title: decodedTitle});
   };
 
   const updateNoteContent = async (id, newContent) => {
     const noteDoc = doc(db, "notes", id);
     await updateDoc(noteDoc, { content: newContent});
-    console.log(newContent)
   };
 
   return (

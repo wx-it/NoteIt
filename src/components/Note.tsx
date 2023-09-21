@@ -18,11 +18,8 @@ const Note: React.FC<NoteContentProps> = ({
 }) => {
   const [isEditable, setIsEditable] = useState(false);
   const [open, setOpen] = useState(false);
-  const [html, setHtml] = useState(selectedNote?.content);
-  // const contentEditable = useRef<ContentEditable>(selectedNote?.content);
 
   const handleChange = (e) => {
-    //setHtml(e.target.value);
     const newContent = e.target.value;
     setContent(newContent);
     updateNoteContent(selectedNote?.id, newContent);
@@ -62,32 +59,16 @@ const Note: React.FC<NoteContentProps> = ({
       ) : (
         <div className="w-screen">
           <div className="border border-b-gray-200 w-full p-5 flex items-center justify-between">
-            {/* <h2
-              onInput={(e) => {
-                const newTitle = e.target.textContent;
-                setNoteTitle(newTitle);
-                updateNoteTitle(selectedNote?.id, newTitle);
-              }}
-              // onChange={() => updateNoteTitle(selectedNote?.id)}
-              dangerouslySetInnerHTML={{ __html: selectedNote?.title }}
-              onBlur={handleBlur}
-              onClick={toggleEdit}
-              contentEditable={isEditable}
-              className={
-                rotate
-                  ? "text-black md:text-[32px] text-[20px] pl-20 font-semibold capitalize focus:outline-none"
-                  : "text-black md:text-[32px] text-[20px] px-8 font-semibold capitalize focus:outline-none"
-              }
-            ></h2> */}
-
             <ContentEditable
               html={selectedNote?.title ? selectedNote.title : ""}
               disabled={false}
               onChange={handleTitleChange}
+              onBlur={handleBlur}
+              onDoubleClick={toggleEdit}
               className={
                 rotate
-                  ? "text-black md:text-[32px] text-[20px] pl-20 font-semibold capitalize focus:outline-none w-full"
-                  : "text-black md:text-[32px] text-[20px] px-6 font-semibold capitalize focus:outline-none w-full"
+                  ? "text-black md:text-[32px] text-[20px] pl-20 font-semibold focus:outline-none w-full"
+                  : "text-black md:text-[32px] text-[20px] px-6 font-semibold focus:outline-none w-full"
               }
             />
 
