@@ -128,7 +128,8 @@ const Dashboard = () => {
 
   const updateNoteContent = async (id, newContent) => {
     const noteDoc = doc(db, "notes", id);
-    await updateDoc(noteDoc, { content: newContent });
+    await updateDoc(noteDoc, { content: newContent});
+    console.log(newContent)
   };
 
   return (
@@ -148,6 +149,7 @@ const Dashboard = () => {
         rotate={rotate}
         setNoteTitle={setNoteTitle}
         setContent={setContent}
+        content={content}
         deleteNote={deleteNote}
         updateNoteTitle={updateNoteTitle}
         updateNoteContent={updateNoteContent}
