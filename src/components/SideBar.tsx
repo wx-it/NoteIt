@@ -6,7 +6,7 @@ import { BiLogOut } from "react-icons/bi";
 import SearchAndAdd from "./SearchAndAdd";
 import { useEffect, useState } from "react";
 import { signOut } from "firebase/auth";
-import { useNavigate, NavLink } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 
 interface SidebarProps {
   notesList: NoteData[];

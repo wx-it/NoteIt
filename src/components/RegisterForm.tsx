@@ -6,34 +6,37 @@ import {
   createUserWithEmailAndPassword,
   signInWithPopup,
   getAuth,
-  AuthErrorCodes,
+  updateProfile,
 } from "firebase/auth";
 
-import { AuthError } from "firebase/auth";
 import { useNavigate } from "react-router-dom";
 import { motion } from "framer-motion";
 import { useForm } from "react-hook-form";
 
 const RegisterForm = () => {
   const [text, setText] = useState(false);
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
-  const [emailError, setEmailError] = useState(null);
-  const [passwordError, setPasswordError] = useState(null);
+  const [name, setName] = useState<string>("");
+  const [email, setEmail] = useState<string>("");
+  const [password, setPassword] = useState<string>("");
+  const [nameError, setNameError] = useState<string | null>(null);
+  const [emailError, setEmailError] = useState<string | null>(null);
+  const [passwordError, setPasswordError] = useState<string | null>(null);
 
   const {
     register,
-    handleSubmit,
-    formState: { errors },
   } = useForm();
 
   const navigate = useNavigate();
 
   const auth = getAuth();
 
-  const signIn = async () => {
+  const signIn = async (e) => {
+    e.preventDefault();
     try {
       await createUserWithEmailAndPassword(auth, email, password);
+      updateProfile(auth.currentUser, {
+        displayName: name,
+    });
       navigate("/dashboard");
     } catch (error) {
       console.log(error);
@@ -50,6 +53,10 @@ const RegisterForm = () => {
 
       if (error.code === "auth/invalid-email") {
         setEmailError("Invalide email");
+      }
+
+      if (!name) {
+        setNameError("Missing name");
       }
     }
   };
@@ -108,10 +115,35 @@ const RegisterForm = () => {
           <div className="w-full md:w-screen h-[0px] border border-blue-950 border-opacity-25"></div>
         </div>
 
-        <form
-          onSubmit={handleSubmit((data) => console.log(data))}
-          className="w-full px-6 space-y-4 md:px-0"
-        >
+        <form onSubmit={signIn} className="w-full px-6 space-y-4 md:px-0">
+          <div className="">
+            <div className="">
+              <span className="text-black text-opacity-80 text-xs font-medium">
+                Name
+              </span>
+              <span className="text-red-500 text-xs font-medium">*</span>
+            </div>
+            <motion.input
+              whileFocus={{
+                boxShadow: "0px 2px 0px 2px #000",
+                border: "2px black solid",
+              }}
+              //  whileTap={{ scale: 0, x: 0 }}
+              transition={{
+                type: "spring",
+                duration: 1,
+              }}
+              className=" w-full text-xs pr-4 pl-3 py-2 rounded-[3px]  border-blue-950 border-opacity-20 border focus:outline-none"
+              type="text"
+              placeholder="Name"
+              {...register("name", { required: true })}
+              onChange={(e) => setName(e.target.value)}
+            />
+            {nameError && (
+              <span className="text-xs text-red-700">{nameError}</span>
+            )}
+          </div>
+
           <div className="">
             <div className="">
               <span className="text-black text-opacity-80 text-xs font-medium">
@@ -176,7 +208,8 @@ const RegisterForm = () => {
             </div>
 
             <button
-              onClick={signIn}
+              // onClick={signIn}
+              type="submit"
               className=" cursor-pointer w-full px-3.5 py-2 bg-black rounded text-center text-neutral-100 text-base font-semibold mt-6"
             >
               Get Started
