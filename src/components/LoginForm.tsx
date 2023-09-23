@@ -3,7 +3,7 @@ import { AiOutlineEye, AiFillEye } from "react-icons/ai";
 import { useState } from "react";
 import { auth, googleProvider } from "../config/firebase";
 import {
-  createUserWithEmailAndPassword,
+  signInWithEmailAndPassword,
   signInWithPopup,
   getAuth,
   updateProfile,
@@ -13,18 +13,14 @@ import { useNavigate, Link } from "react-router-dom";
 import { motion } from "framer-motion";
 import { useForm } from "react-hook-form";
 
-const RegisterForm = ({setLogin}) => {
+const LoginForm = ({ setLogin }) => {
   const [text, setText] = useState(false);
-  const [name, setName] = useState<string>("");
   const [email, setEmail] = useState<string>("");
   const [password, setPassword] = useState<string>("");
-  const [nameError, setNameError] = useState<string | null>(null);
   const [emailError, setEmailError] = useState<string | null>(null);
   const [passwordError, setPasswordError] = useState<string | null>(null);
 
-  const {
-    register,
-  } = useForm();
+  const { register } = useForm();
 
   const navigate = useNavigate();
 
@@ -33,30 +29,23 @@ const RegisterForm = ({setLogin}) => {
   const signIn = async (e) => {
     e.preventDefault();
     try {
-      await createUserWithEmailAndPassword(auth, email, password);
-      updateProfile(auth.currentUser, {
-        displayName: name,
-    });
+      await signInWithEmailAndPassword(auth, email, password);
       navigate("/dashboard");
     } catch (error) {
       console.log(error);
       if (error.code === "auth/missing-password") {
         setPasswordError("Missing password");
       }
-      if (error.code === "auth/weak-password") {
-        setPasswordError("Password should be at least 6 characters");
+      if (error.code === "auth/wrong-password") {
+        setPasswordError("Wrong password, please try again");
       }
 
-      if (error.code === "auth/email-already-in-use") {
-        setEmailError("Email already in use, please log in instead");
+      if (error.code === "auth/user-not-found") {
+        setEmailError("Email not found, please sign up instead");
       }
 
       if (error.code === "auth/invalid-email") {
         setEmailError("Invalide email");
-      }
-
-      if (!name) {
-        setNameError("Missing name");
       }
     }
   };
@@ -81,11 +70,9 @@ const RegisterForm = ({setLogin}) => {
         <div className="text-center w-full">
           <h1 className="text-black text-4xl font-semibold0">NOTE iT</h1>
           <div className="space-y-2 mt-6">
-            <h2 className="text-[22px] font-semibold leading-7 ">
-              Create an Account
-            </h2>
+            <h2 className="text-[22px] font-semibold leading-7 ">Log In</h2>
             <p className=" text-slate-800 text-opacity-80 text-sm font-normal leading-[18.76px]">
-              Sign up now to get started with an account.
+              Log in to your account.
             </p>
           </div>
           <div className="px-6 w-screen mt-4 md:w-full md:px-0">
@@ -116,34 +103,6 @@ const RegisterForm = ({setLogin}) => {
         </div>
 
         <form onSubmit={signIn} className="w-full px-6 space-y-4 md:px-0">
-          <div className="">
-            <div className="">
-              <span className="text-black text-opacity-80 text-xs font-medium">
-                Name
-              </span>
-              <span className="text-red-500 text-xs font-medium">*</span>
-            </div>
-            <motion.input
-              whileFocus={{
-                boxShadow: "0px 2px 0px 2px #000",
-                border: "2px black solid",
-              }}
-              //  whileTap={{ scale: 0, x: 0 }}
-              transition={{
-                type: "spring",
-                duration: 1,
-              }}
-              className=" w-full text-xs pr-4 pl-3 py-2 rounded-[3px]  border-blue-950 border-opacity-20 border focus:outline-none"
-              type="text"
-              placeholder="Name"
-              {...register("name", { required: true })}
-              onChange={(e) => setName(e.target.value)}
-            />
-            {nameError && (
-              <span className="text-xs text-red-700">{nameError}</span>
-            )}
-          </div>
-
           <div className="">
             <div className="">
               <span className="text-black text-opacity-80 text-xs font-medium">
@@ -208,7 +167,6 @@ const RegisterForm = ({setLogin}) => {
             </div>
 
             <button
-              // onClick={signIn}
               type="submit"
               className=" cursor-pointer w-full px-3.5 py-2 bg-black rounded text-center text-neutral-100 text-base font-semibold mt-6"
             >
@@ -217,10 +175,13 @@ const RegisterForm = ({setLogin}) => {
           </div>
           <div className="flex items-center justify-center space-x-1">
             <p className="text-center text-black text-[13px] font-normal leading-none">
-              Already have an account?
+              Don't have an account?
             </p>
-            <a onClick={()=> setLogin(true)}  className=" cursor-pointer text-center text-neutral-700 text-opacity-80 text-[13px] font-semibold">
-              Log in
+            <a
+              onClick={() => setLogin(false)}
+              className=" cursor-pointer text-center text-neutral-700 text-opacity-80 text-[13px] font-semibold"
+            >
+              Sign up
             </a>
           </div>
         </form>
@@ -229,4 +190,4 @@ const RegisterForm = ({setLogin}) => {
   );
 };
 
-export default RegisterForm;
+export default LoginForm;

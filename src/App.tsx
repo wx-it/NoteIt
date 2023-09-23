@@ -1,5 +1,5 @@
 import Dashboard from "./pages/Dashboard";
-import Login from "./pages/Login";
+import Authentication from "./pages/Authentication";
 import { Route, Routes, useNavigate } from "react-router-dom";
 import {auth} from "./config/firebase"
 import { useEffect } from "react";
@@ -23,7 +23,7 @@ function App() {
   return (
       <div className="font-[Inter]">
         <Routes>
-          <Route path="/" element={<Login />} />
+          <Route path="/" element={<Authentication />} />
           <Route path="/dashboard" element={<Dashboard />} />
         </Routes>
       </div>
