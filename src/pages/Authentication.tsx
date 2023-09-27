@@ -1,6 +1,5 @@
 import RegisterForm from "../components/RegisterForm";
 import loginImg from "../assets/img/login.svg";
-import { Route, Routes, NavLink } from "react-router-dom";
 import LoginForm from "../components/LoginForm";
 import { useState } from "react";
 

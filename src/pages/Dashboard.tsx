@@ -130,7 +130,9 @@ const Dashboard = () => {
   const updateNoteContent = async (id, newContent) => {
     const noteDoc = doc(db, "notes", id);
     await updateDoc(noteDoc, { content: newContent});
+    //console.log(newContent)
   };
+
 
   return (
     <div className="flex w-full h-full">
@@ -143,8 +145,10 @@ const Dashboard = () => {
         selectedNoteId={selectedNoteId}
         addNote={createNote}
       />
+      <div className={rotate ? "w-full" : "md:w-[75%] w-full"}>
       <Note
         selectedNote={selectedNote}
+        selectedNoteId={selectedNoteId}
         notesList={notesList}
         rotate={rotate}
         setNoteTitle={setNoteTitle}
@@ -154,6 +158,8 @@ const Dashboard = () => {
         updateNoteTitle={updateNoteTitle}
         updateNoteContent={updateNoteContent}
       />
+
+      </div>
     </div>
   );
 };
