@@ -8,7 +8,7 @@ export default {
     },
     extend: {
       fontFamily: {
-        'Inter': ['Inter', 'sans-serif'],
+        'Poppins': ['Poppins', 'sans-serif'],
       },
       boxShadow: {
         'forms': '0px 2px 0px 1px #000',

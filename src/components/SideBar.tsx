@@ -7,6 +7,9 @@ import SearchAndAdd from "./SearchAndAdd";
 import { useEffect, useState } from "react";
 import { signOut } from "firebase/auth";
 import { useNavigate } from "react-router-dom";
+import maximizeMinimize2 from "react-useanimations/lib/maximizeMinimize2";
+import UseAnimations from "react-useanimations";
+import twitter from "react-useanimations/lib/twitter";
 
 interface SidebarProps {
   notesList: NoteData[];
@@ -46,15 +49,15 @@ const SideBar: React.FC<SidebarProps> = ({
       key={note.id}
       className={
         selectedNoteId === note.id
-          ? "border-2 border-t-black border-b-black border-r-black p-5 cursor-pointer"
-          : "border-b border-b-gray-300 border-r-gray-100 p-5 cursor-pointer"
+          ? "bg-stone-800 bg-opacity-40 rounded-[20px] shadow m-3 p-5 cursor-pointer"
+          : "bg-stone-400 bg-opacity-40 rounded-[20px] shadow m-3 p-5 cursor-pointer"
       }
       onClick={() => {
         onSelectNote(note);
         setEditorKey((prevKey: number) => prevKey + 1);
       }}
     >
-      <h3>{note.title}</h3>
+      <h3 className="text-sm font-medium">{note.title}</h3>
     </div>
   ));
 
@@ -93,18 +96,18 @@ const SideBar: React.FC<SidebarProps> = ({
         ease: "easeInOut",
         duration: 1,
       }}
-      className="md:border-r-2 md:border-r-gray-300 h-screen fixed z-10 bg-white md:sticky md:top-0 w-[50%] flex items-start justify-between flex-col "
+      className="md:border-r-2 md:border-r-gray-300 h-screen fixed z-10 bg-[#E4E4E4] md:sticky md:top-0 w-[50%] flex items-start justify-between flex-col "
     >
       <div className="w-full">
-        <div className=" flex items-center justify-between p-3 w-full">
-          <h1 className="text-black text-[5vw] md:text-[3vw] font-semibold">
-            NOTE iT
+        <div className=" flex items-center justify-between p-6 w-full">
+          <h1 className="text-black text-[20px] md:text-[3vw] font-semibold">
+            NoteIt.
           </h1>
           <motion.div
             onClick={handleSidebar}
-            className="flex flex-col items-center justify-center py-[.5vw] px-[2.5vw] md:px-[1.25vw] border-2 border-black cursor-pointer w-fit"
+            className="flex flex-col items-center justify-center  p-[2.5vw] md:p-[0.75vw] rounded-full cursor-pointer w-fit bg-[#5E5E5E]"
           >
-            <motion.div
+            {/* <motion.div
               whileHover={{ scale: rotate ? 1.1 : 1.1 }}
               whileTap={{ scale: rotate ? 0.9 : 0 }}
               animate={{ rotate: rotate ? 0 : 180 }}
@@ -119,7 +122,13 @@ const SideBar: React.FC<SidebarProps> = ({
               className=" text-black"
             >
               <IoIosArrowDown />
-            </motion.div>
+            </motion.div> */}
+            <UseAnimations
+              animation={maximizeMinimize2}
+              size={20}
+              strokeColor="white"
+              speed={0.25}
+            />
           </motion.div>
         </div>
         <SearchAndAdd search={search} setSearch={setSearch} addNote={addNote} />
@@ -127,16 +136,16 @@ const SideBar: React.FC<SidebarProps> = ({
           {notesTitles}
         </div>
       </div>
-      <div className=" border-2 border-t-black border-r-black w-full p-4 flex items-center justify-between bg-white z-10 ">
+      <div className=" border border-t-black w-full p-4 flex items-center justify-between bg-[#E4E4E4] z-10 ">
         <img
           className="w-[40px] rounded-full"
           src={auth.currentUser?.photoURL || ""}
           alt=""
         />
-        <h3> {auth.currentUser?.displayName} </h3>
+        <h3 className="text-zinc-700 text-base " > {auth.currentUser?.displayName} </h3>
         <button
           onClick={handleLogout}
-          className="text-[20px] text-gray-500 cursor-pointer"
+          className="text-[20px] text-zinc-700 cursor-pointer"
         >
           <BiLogOut />
         </button>

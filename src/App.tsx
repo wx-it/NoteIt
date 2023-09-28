@@ -21,7 +21,7 @@ function App() {
   
 
   return (
-      <div className="font-[Inter]">
+      <div className="font-[Poppins]">
         <Routes>
           <Route path="/" element={<Authentication />} />
           <Route path="/dashboard" element={<Dashboard />} />

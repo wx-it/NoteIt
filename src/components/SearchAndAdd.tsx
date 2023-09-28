@@ -1,7 +1,9 @@
 import { useState } from "react";
 import { IoMdAdd } from "react-icons/io";
 import { motion } from "framer-motion";
-import { AnimatePresence } from "framer-motion";
+//import { AnimatePresence } from "framer-motion";
+import plusToX from "react-useanimations/lib/plusToX";
+import UseAnimations from "react-useanimations";
 
 const SearchAndAdd = ({ search, setSearch, addNote }) => {
   const [newNote, setNewNote] = useState(false);
@@ -16,21 +18,21 @@ const SearchAndAdd = ({ search, setSearch, addNote }) => {
 
   return (
     <motion.div className=" w-full">
-      <div className="flex items-center justify-center gap-3 py-6 px-2 border border-t-neutral-400 border-b-neutral-400 ">
+      <div className="flex items-center justify-center gap-3 py-6 px-2 ">
         <input
           type="text"
           placeholder="Search Note"
           value={search}
           onChange={(e) => setSearch(e.target.value)}
-          className="border-2 border-black p-2 rounded-md bg-zinc-100 text-black text-[13px] font-normal font-['Inter'] "
+          className="border border-[#BDBDBD] p-2 pl-4 rounded-md bg-[#D6D6D6] text-[#726F6F] text-[15px] font-light font-['Poppins'] focus:outline-none"
         />
 
         <button
           onClick={() => setNewNote(!newNote)}
-          className="
-      w-10 h-10 bg-white rounded-[5px] border-2 border-black flex items-center justify-center text-3xl text-black"
+          className="w-10 h-10 bg-neutral-700 bg-opacity-80 rounded-[5px] flex items-center justify-center"
         >
-          <IoMdAdd />
+          {/* <IoMdAdd /> */}
+          <UseAnimations animation={plusToX} strokeColor="white" size={40} />
         </button>
       </div>
       {newNote && (
@@ -47,22 +49,22 @@ const SearchAndAdd = ({ search, setSearch, addNote }) => {
           <input
             type="text"
             placeholder="Title"
-            className="border-2 border-black rounded-md text-[14px] p-2 w-full"
+            className="border border-[#BDBDBD] p-2 pl-4 rounded-md bg-[#D6D6D6] text-[#726F6F] text-[15px] font-light font-['Poppins'] focus:outline-none w-full"
             value={title}
             onChange={(e) => setTitle(e.target.value)}
             required
           />
-          <div className="flex items-center justify-end w-full gap-2 py-4">
+          <div className="flex items-stretch justify-end w-full gap-2 py-4">
             <motion.button
               whileHover={{ scale: 1.05, x: 0 }}
               whileTap={{ scale: 0, x: 0 }}
               transition={{
                 type: "tween",
                 ease: "easeInOut",
-                duration: .5,
+                duration: 0.5,
               }}
               onClick={() => setNewNote(!newNote)}
-              className="border-2 border-black py-1 px-3 rounded-md bg-white"
+              className="text-neutral-700 border border-neutral-700 text-[15px] font-light py-2 px-6 rounded-sm bg-transparent "
             >
               Cancel
             </motion.button>
@@ -72,10 +74,10 @@ const SearchAndAdd = ({ search, setSearch, addNote }) => {
               transition={{
                 type: "tween",
                 ease: "easeInOut",
-                duration: .5,
+                duration: 0.5,
               }}
               onClick={handleSubmit}
-              className="border-2 border-black py-1 px-3 rounded-md text-white bg-black"
+              className="text-white text-[15px] font-light py-2 px-6 rounded-sm bg-neutral-700 bg-opacity-80"
             >
               Save
             </motion.button>
