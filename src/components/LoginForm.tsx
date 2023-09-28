@@ -1,19 +1,22 @@
 import { FcGoogle } from "react-icons/fc";
 import { AiOutlineEye, AiFillEye } from "react-icons/ai";
 import { useState } from "react";
-import { auth, googleProvider } from "../config/firebase";
+import { googleProvider } from "../config/firebase";
 import {
   signInWithEmailAndPassword,
   signInWithPopup,
   getAuth,
-  updateProfile,
 } from "firebase/auth";
-
-import { useNavigate, Link } from "react-router-dom";
+import { FirebaseError } from "firebase/app";
+import { useNavigate } from "react-router-dom";
 import { motion } from "framer-motion";
 import { useForm } from "react-hook-form";
 
-const LoginForm = ({ setLogin }) => {
+interface LoginFormProps {
+  setLogin: React.Dispatch<React.SetStateAction<boolean>>;
+}
+
+const LoginForm: React.FC<LoginFormProps> = ({ setLogin }) => {
   const [text, setText] = useState(false);
   const [email, setEmail] = useState<string>("");
   const [password, setPassword] = useState<string>("");
@@ -26,13 +29,12 @@ const LoginForm = ({ setLogin }) => {
 
   const auth = getAuth();
 
-  const signIn = async (e) => {
+  const signIn = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     try {
       await signInWithEmailAndPassword(auth, email, password);
       navigate("/dashboard");
-    } catch (error) {
-      console.log(error);
+    } catch (error: FirebaseError) {
       if (error.code === "auth/missing-password") {
         setPasswordError("Missing password");
       }

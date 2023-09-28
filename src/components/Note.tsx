@@ -2,9 +2,20 @@ import NoteData from "../noteData";
 import { useState, useEffect } from "react";
 import ContentEditable from "react-contenteditable";
 import { Editor } from "novel";
+import { JSONContent } from "@tiptap/react";
 
 interface NoteContentProps {
   selectedNote: NoteData | null;
+  rotate: boolean;
+  setNoteTitle: (newTitle: string) => void;
+  deleteNote: (id: string | undefined) => void;
+  updateNoteTitle: (id: string | undefined, newTitle: string) => void;
+  updateNoteContent: (
+    id: string | undefined,
+    newContent: JSONContent | undefined
+  ) => void;
+  notesList: NoteData;
+  editorKey: number;
 }
 
 const Note: React.FC<NoteContentProps> = ({
@@ -20,7 +31,7 @@ const Note: React.FC<NoteContentProps> = ({
   const [isEditable, setIsEditable] = useState(false);
   const [open, setOpen] = useState(false);
 
-  const handleTitleChange = (e) => {
+  const handleTitleChange = (e: ChangeEvent<HTMLInputElement>) => {
     const newTitle = e.target.value;
     setNoteTitle(newTitle);
     updateNoteTitle(selectedNote?.id, newTitle);
@@ -35,12 +46,16 @@ const Note: React.FC<NoteContentProps> = ({
   };
 
   useEffect(() => {
-    if (notesList.length === 0) {
+    if (
+      notesList.length === 0 ||
+      selectedNote === null ||
+      (notesList.length === 0 && selectedNote === null)
+    ) {
       setOpen(true);
     } else {
       setOpen(false);
     }
-  }, [notesList]);
+  }, [notesList, selectedNote]);
 
   return (
     <>
@@ -77,10 +92,11 @@ const Note: React.FC<NoteContentProps> = ({
 
           <Editor
             className="shadow-none w-full"
-            defaultValue={selectedNote?.content}
+            defaultValue={selectedNote?.content ? selectedNote.content : ""}
             key={editorKey}
             onUpdate={(editor) => {
-              const newContent = editor?.getJSON().content;
+              const newContent = editor?.getJSON();
+              console.log(newContent);
               if (selectedNote) {
                 updateNoteContent(selectedNote?.id, newContent);
               }

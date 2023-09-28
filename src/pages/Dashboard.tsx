@@ -2,7 +2,6 @@ import { useState, useEffect } from "react";
 import { db } from "../config/firebase";
 import {
   addDoc,
-  getDocs,
   collection,
   query,
   where,
@@ -13,12 +12,13 @@ import {
 } from "firebase/firestore";
 import SideBar from "../components/SideBar";
 import Note from "../components/Note";
-import OpenSidebar from "../components/openSidebar";
+import OpenSidebar from "../components/OpenSidebar";
 import NoteData from "../noteData";
 import { auth } from "../config/firebase";
+import { User } from "firebase/auth";
 
 const Dashboard = () => {
-  const [editorKey, setEditorKey] = useState(0);
+  const [editorKey, setEditorKey] = useState<number>(0);
   const [notesList, setNotesList] = useState<NoteData[]>([]);
   const [rotate, setRotate] = useState(false);
   const [selectedNote, setSelectedNote] = useState<NoteData | null>(null);
@@ -27,7 +27,6 @@ const Dashboard = () => {
   const [noteTitle, setNoteTitle] = useState<string>("");
   const [content, setContent] = useState("");
 
-  const notesCollection = collection(db, "notes");
   const selectedNoteId: string | null = localStorage.getItem("selectedNoteId");
 
   const handleSelectNote = (note: NoteData) => {
@@ -56,11 +55,11 @@ const Dashboard = () => {
   };
 
   //get the users notes
-  const [user, setUser] = useState<string | null>(null);
+  const [user, setUser] = useState<User | null>(null);
 
   useEffect(() => {
     // Check if the user is authenticated
-    const unsubscribe = auth.onAuthStateChanged((user) => {
+    const unsubscribe = auth.onAuthStateChanged((user: User | null) => {
       if (user) {
         setUser(user);
 
@@ -107,6 +106,7 @@ const Dashboard = () => {
         id: docRef.id,
         userId: currentUser.uid,
         title: newNote.title,
+        content: "",
       };
 
       setNotesList([newNoteWithId, ...notesList]);
@@ -116,24 +116,23 @@ const Dashboard = () => {
   };
 
   //delete note
-  const deleteNote = async (id) => {
+  const deleteNote = async (id: string) => {
     const noteDoc = doc(db, "notes", id);
     await deleteDoc(noteDoc);
   };
 
   //update note
-  const updateNoteTitle = async (id, newTitle) => {
+  const updateNoteTitle = async (id: string, newTitle: string) => {
     const noteDoc = doc(db, "notes", id);
-    const decodedTitle = new DOMParser().parseFromString(newTitle, "text/html").body.textContent;
-    await updateDoc(noteDoc, { title: decodedTitle});
+    const decodedTitle = new DOMParser().parseFromString(newTitle, "text/html")
+      .body.textContent;
+    await updateDoc(noteDoc, { title: decodedTitle });
   };
 
-  const updateNoteContent = async (id, newContent) => {
+  const updateNoteContent = async (id: string, newContent: string) => {
     const noteDoc = doc(db, "notes", id);
-    await updateDoc(noteDoc, { content: newContent});
-    //console.log(newContent)
+    await updateDoc(noteDoc, { content: newContent });
   };
-
 
   return (
     <div className="flex w-full h-full">
@@ -146,24 +145,20 @@ const Dashboard = () => {
         selectedNoteId={selectedNoteId}
         addNote={createNote}
         setEditorKey={setEditorKey}
-        editorKey={editorKey}
       />
       <div className={rotate ? "w-full" : "md:w-[75%] w-full"}>
-      <Note
-        selectedNote={selectedNote}
-        selectedNoteId={selectedNoteId}
-        notesList={notesList}
-        rotate={rotate}
-        setNoteTitle={setNoteTitle}
-        setContent={setContent}
-        content={content}
-        deleteNote={deleteNote}
-        updateNoteTitle={updateNoteTitle}
-        updateNoteContent={updateNoteContent}
-        setEditorKey={setEditorKey}
-        editorKey={editorKey}
-      />
-
+        <Note
+          selectedNote={selectedNote}
+          notesList={notesList}
+          rotate={rotate}
+          setNoteTitle={setNoteTitle}
+          setContent={setContent}
+          content={content}
+          deleteNote={deleteNote}
+          updateNoteTitle={updateNoteTitle}
+          updateNoteContent={updateNoteContent}
+          editorKey={editorKey}
+        />
       </div>
     </div>
   );

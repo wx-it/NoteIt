@@ -4,7 +4,7 @@ import LoginForm from "../components/LoginForm";
 import { useState } from "react";
 
 const Authentication = () => {
-  const [login, setLogin] = useState(false);
+  const [login, setLogin] = useState<boolean>(false);
 
   return (
     <div className="flex w-full items-center justify-center">
