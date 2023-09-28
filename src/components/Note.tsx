@@ -1,6 +1,8 @@
 import NoteData from "../noteData";
-import { useState, useEffect, useRef } from "react";
-import ContentEditable, { ContentEditableEvent } from "react-contenteditable";
+import { useState, useEffect } from "react";
+import ContentEditable from "react-contenteditable";
+import { Editor } from "novel";
+
 interface NoteContentProps {
   selectedNote: NoteData | null;
 }
@@ -9,21 +11,14 @@ const Note: React.FC<NoteContentProps> = ({
   selectedNote,
   rotate,
   setNoteTitle,
-  setContent,
   deleteNote,
   updateNoteTitle,
   updateNoteContent,
   notesList,
-  content,
+  editorKey,
 }) => {
   const [isEditable, setIsEditable] = useState(false);
   const [open, setOpen] = useState(false);
-
-  const handleChange = (e) => {
-    const newContent = e.target.value;
-    setContent(newContent);
-    updateNoteContent(selectedNote?.id, newContent);
-  };
 
   const handleTitleChange = (e) => {
     const newTitle = e.target.value;
@@ -57,7 +52,7 @@ const Note: React.FC<NoteContentProps> = ({
           </h1>
         </div>
       ) : (
-        <div className="w-screen">
+        <div className="w-full">
           <div className="border border-b-gray-200 w-full p-5 flex items-center justify-between">
             <ContentEditable
               html={selectedNote?.title ? selectedNote.title : ""}
@@ -79,11 +74,18 @@ const Note: React.FC<NoteContentProps> = ({
               Delete
             </button>
           </div>
-          <ContentEditable
-            html={selectedNote?.content ? selectedNote.content : ""}
-            disabled={false}
-            onChange={handleChange}
-            className="md:p-12 p-8 focus:border-none focus:outline-none "
+
+          <Editor
+            className="shadow-none w-full"
+            defaultValue={selectedNote?.content}
+            key={editorKey}
+            onUpdate={(editor) => {
+              const newContent = editor?.getJSON().content;
+              if (selectedNote) {
+                updateNoteContent(selectedNote?.id, newContent);
+              }
+            }}
+            disableLocalStorage={true}
           />
         </div>
       )}

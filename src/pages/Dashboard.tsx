@@ -18,6 +18,7 @@ import NoteData from "../noteData";
 import { auth } from "../config/firebase";
 
 const Dashboard = () => {
+  const [editorKey, setEditorKey] = useState(0);
   const [notesList, setNotesList] = useState<NoteData[]>([]);
   const [rotate, setRotate] = useState(false);
   const [selectedNote, setSelectedNote] = useState<NoteData | null>(null);
@@ -144,6 +145,8 @@ const Dashboard = () => {
         onSelectNote={handleSelectNote}
         selectedNoteId={selectedNoteId}
         addNote={createNote}
+        setEditorKey={setEditorKey}
+        editorKey={editorKey}
       />
       <div className={rotate ? "w-full" : "md:w-[75%] w-full"}>
       <Note
@@ -157,6 +160,8 @@ const Dashboard = () => {
         deleteNote={deleteNote}
         updateNoteTitle={updateNoteTitle}
         updateNoteContent={updateNoteContent}
+        setEditorKey={setEditorKey}
+        editorKey={editorKey}
       />
 
       </div>

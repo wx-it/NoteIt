@@ -23,7 +23,9 @@ const SideBar: React.FC<SidebarProps> = ({
   rotate,
   onSelectNote,
   selectedNoteId,
-  addNote
+  addNote,
+  editorKey,
+  setEditorKey
 }) => {
   //search for notes
   const [search, setSearch] = useState("");
@@ -46,7 +48,7 @@ const SideBar: React.FC<SidebarProps> = ({
           ? "border-2 border-t-black border-b-black border-r-black p-5 cursor-pointer"
           : "border-b border-b-gray-300 border-r-gray-100 p-5 cursor-pointer"
       }
-      onClick={() => onSelectNote(note)}
+      onClick={() => { onSelectNote(note); setEditorKey((prevKey) => prevKey + 1)}}
     >
       <h3>{note.title}</h3>
     </div>
