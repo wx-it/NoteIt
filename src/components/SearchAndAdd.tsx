@@ -3,6 +3,7 @@ import { IoMdAdd } from "react-icons/io";
 import { motion } from "framer-motion";
 //import { AnimatePresence } from "framer-motion";
 import plusToX from "react-useanimations/lib/plusToX";
+import React from "react";
 import UseAnimations from "react-useanimations";
 
 const SearchAndAdd = ({ search, setSearch, addNote }) => {
@@ -32,7 +33,7 @@ const SearchAndAdd = ({ search, setSearch, addNote }) => {
           className="w-10 h-10 bg-neutral-700 bg-opacity-80 rounded-[5px] flex items-center justify-center"
         >
           {/* <IoMdAdd /> */}
-          <UseAnimations animation={plusToX} strokeColor="white" size={40} />
+          <UseAnimations onClick={()=>  console.log('additional onClick cb is working')} animation={plusToX} strokeColor="white" size={40} loop={true} autoPlay={true} />
         </button>
       </div>
       {newNote && (

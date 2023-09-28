@@ -3,6 +3,8 @@ import { useState, useEffect } from "react";
 import ContentEditable from "react-contenteditable";
 import { Editor } from "novel";
 import { JSONContent } from "@tiptap/react";
+import trash2 from "react-useanimations/lib/trash2";
+import UseAnimations from "react-useanimations";
 
 interface NoteContentProps {
   selectedNote: NoteData | null;
@@ -68,30 +70,26 @@ const Note: React.FC<NoteContentProps> = ({
         </div>
       ) : (
         <div className="w-full">
-          <div className="border border-b-gray-200 w-full p-5 flex items-center justify-between">
-            <ContentEditable
-              html={selectedNote?.title ? selectedNote.title : ""}
-              disabled={false}
-              onChange={handleTitleChange}
-              onBlur={handleBlur}
-              onDoubleClick={toggleEdit}
-              className={
-                rotate
-                  ? "text-black md:text-[32px] text-[20px] pl-20 font-semibold focus:outline-none w-full"
-                  : "text-black md:text-[32px] text-[20px] px-6 font-semibold focus:outline-none w-full"
-              }
-            />
-
+          <div className=" w-full p-5 flex items-center justify-end">
             <button
-              className="border-2 border-black shadow-button py-2 px-5 text-sm rounded-full hover:shadow-none hover:bg-red-500 hover:text-white hover:border-none"
+              className="border border-[#464646] p-2  text-sm rounded-md"
               onClick={() => deleteNote(selectedNote?.id)}
             >
-              Delete
+              <UseAnimations animation={trash2} strokeColor="#464646" />
             </button>
           </div>
+          <ContentEditable
+            html={selectedNote?.title ? selectedNote.title : ""}
+            disabled={false}
+            onChange={handleTitleChange}
+            onBlur={handleBlur}
+            onDoubleClick={toggleEdit}
+            className="text-black md:text-[32px] text-[20px] mx-8 md:mx-12 font-bold focus:outline-none"
+          />
+          <span className="mx-8 md:mx-12 text-xs">September 28, 2023</span>
 
           <Editor
-            className="shadow-none w-full"
+            className="shadow-none w-full text-[#1B1B1B]"
             defaultValue={selectedNote?.content ? selectedNote.content : ""}
             key={editorKey}
             onUpdate={(editor) => {

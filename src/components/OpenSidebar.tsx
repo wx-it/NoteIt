@@ -15,9 +15,9 @@ const OpenSidebar: React.FC<OpenSidebarProps> = ({ handleSidebar }) => {
         duration: 1,
       }}
       onClick={handleSidebar}
-      className="fixed left-0 top-0 bg-black text-white pl-4 pr-8 pb-6 pt-4 rounded-br-full cursor-pointer "
+      className="fixed left-4 top-4 bg-[#5E5E5E] p-4 rounded-full cursor-pointer "
     >
-      Open
+      
     </motion.button>
   );
 };

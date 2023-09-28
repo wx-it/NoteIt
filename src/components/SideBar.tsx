@@ -9,7 +9,8 @@ import { signOut } from "firebase/auth";
 import { useNavigate } from "react-router-dom";
 import maximizeMinimize2 from "react-useanimations/lib/maximizeMinimize2";
 import UseAnimations from "react-useanimations";
-import twitter from "react-useanimations/lib/twitter";
+
+import { BiUser } from "react-icons/bi";
 
 interface SidebarProps {
   notesList: NoteData[];
@@ -100,7 +101,7 @@ const SideBar: React.FC<SidebarProps> = ({
     >
       <div className="w-full">
         <div className=" flex items-center justify-between p-6 w-full">
-          <h1 className="text-black text-[20px] md:text-[3vw] font-semibold">
+          <h1 className="text-black text-[20px] md:text-[1.5vw] font-semibold">
             NoteIt.
           </h1>
           <motion.div
@@ -137,12 +138,22 @@ const SideBar: React.FC<SidebarProps> = ({
         </div>
       </div>
       <div className=" border border-t-black w-full p-4 flex items-center justify-between bg-[#E4E4E4] z-10 ">
-        <img
-          className="w-[40px] rounded-full"
-          src={auth.currentUser?.photoURL || ""}
-          alt=""
-        />
-        <h3 className="text-zinc-700 text-base " > {auth.currentUser?.displayName} </h3>
+        <div className="flex items-center justify-center gap-3" >
+        {auth.currentUser?.photoURL ? (
+          <img
+            className="w-[40px] rounded-full"
+            src={auth.currentUser?.photoURL || ""}
+            alt=""
+          />
+        ) : (
+          <div className="border border-black rounded-full p-2 text-3xl" >
+            <BiUser />
+          </div>
+        )}
+        <h3 className="text-zinc-700 text-xl ">
+          {auth.currentUser?.displayName}
+        </h3>
+        </div>
         <button
           onClick={handleLogout}
           className="text-[20px] text-zinc-700 cursor-pointer"
