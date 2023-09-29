@@ -1,14 +1,17 @@
-import { IoIosArrowDown } from "react-icons/io";
+//import { IoIosArrowDown } from "react-icons/io";
 import { motion } from "framer-motion";
 import NoteData from "../noteData";
 import { auth } from "../config/firebase";
 import { BiLogOut } from "react-icons/bi";
 import SearchAndAdd from "./SearchAndAdd";
-import { useEffect, useState } from "react";
+import { useEffect, useState, useRef } from "react";
 import { signOut } from "firebase/auth";
 import { useNavigate } from "react-router-dom";
-import maximizeMinimize2 from "react-useanimations/lib/maximizeMinimize2";
-import UseAnimations from "react-useanimations";
+import React from "react";
+ import maximizeMinimize2 from "react-useanimations/lib/maximizeMinimize2";
+ import UseAnimations from "react-useanimations";
+//import Lottie from "lottie-react";
+//import animationData from "../assets/animation_ln4fzgn4.json"
 
 import { BiUser } from "react-icons/bi";
 
@@ -32,6 +35,7 @@ const SideBar: React.FC<SidebarProps> = ({
   addNote,
   setEditorKey,
 }) => {
+  //const expandAnimationRef = useRef(null)
   //search for notes
   const [search, setSearch] = useState("");
   const [filteredNotes, setFilteredNotes] = useState([]);
@@ -106,7 +110,7 @@ const SideBar: React.FC<SidebarProps> = ({
           </h1>
           <motion.div
             onClick={handleSidebar}
-            className="flex flex-col items-center justify-center  p-[2.5vw] md:p-[0.75vw] rounded-full cursor-pointer w-fit bg-[#5E5E5E]"
+            className="flex flex-col items-center justify-center p-[2.5vw] md:p-[0.75vw] rounded-full cursor-pointer w-fit bg-[#5E5E5E]"
           >
             {/* <motion.div
               whileHover={{ scale: rotate ? 1.1 : 1.1 }}
@@ -124,16 +128,17 @@ const SideBar: React.FC<SidebarProps> = ({
             >
               <IoIosArrowDown />
             </motion.div> */}
-            <UseAnimations
+             <UseAnimations
               animation={maximizeMinimize2}
               size={20}
               strokeColor="white"
               speed={0.25}
             />
+          
           </motion.div>
         </div>
         <SearchAndAdd search={search} setSearch={setSearch} addNote={addNote} />
-        <div className=" overflow-y-auto max-h-[70vh] w-full">
+        <div className=" overflow-y-auto max-h-[69vh] w-full">
           {notesTitles}
         </div>
       </div>

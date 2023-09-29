@@ -5,6 +5,7 @@ import { Editor } from "novel";
 import { JSONContent } from "@tiptap/react";
 import trash2 from "react-useanimations/lib/trash2";
 import UseAnimations from "react-useanimations";
+import React from 'react';
 
 interface NoteContentProps {
   selectedNote: NoteData | null;
@@ -59,6 +60,7 @@ const Note: React.FC<NoteContentProps> = ({
     }
   }, [notesList, selectedNote]);
 
+  const currentDate = new Date(selectedNote?.createdAt)
   return (
     <>
       {open ? (
@@ -86,7 +88,7 @@ const Note: React.FC<NoteContentProps> = ({
             onDoubleClick={toggleEdit}
             className="text-black md:text-[32px] text-[20px] mx-8 md:mx-12 font-bold focus:outline-none"
           />
-          <span className="mx-8 md:mx-12 text-xs">September 28, 2023</span>
+          <span className="mx-8 md:mx-12 text-xs">{currentDate.toDateString()}</span>
 
           <Editor
             className="shadow-none w-full text-[#1B1B1B]"
@@ -94,7 +96,7 @@ const Note: React.FC<NoteContentProps> = ({
             key={editorKey}
             onUpdate={(editor) => {
               const newContent = editor?.getJSON();
-              console.log(newContent);
+              //console.log(newContent);
               if (selectedNote) {
                 updateNoteContent(selectedNote?.id, newContent);
               }

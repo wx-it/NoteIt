@@ -8,6 +8,7 @@ import {
   onSnapshot,
   updateDoc,
   deleteDoc,
+  setDoc,
   doc,
 } from "firebase/firestore";
 import SideBar from "../components/SideBar";
@@ -29,6 +30,8 @@ const Dashboard = () => {
 
   const selectedNoteId: string | null = localStorage.getItem("selectedNoteId");
 
+  //const [selectedNoteId, setSelectedNoteId] = useState(localStorage.getItem("selectedNoteId"))
+
   const handleSelectNote = (note: NoteData) => {
     localStorage.setItem("selectedNoteId", note.id);
     setSelectedNote(note);
@@ -46,6 +49,10 @@ const Dashboard = () => {
 
       if (lastOpenedNote) {
         setSelectedNote(lastOpenedNote);
+      }
+
+      if (!lastOpenedNote) {
+        lastOpenedNote === selectedNote?.id;
       }
     }
   }, [notesList]);
@@ -100,13 +107,15 @@ const Dashboard = () => {
       const docRef = await addDoc(notesCollection, {
         userId: currentUser.uid,
         title: newNote.title,
+        content: "",
+        createdAt: Date.now(),
+        updatedAt: Date.now(),
       });
 
       const newNoteWithId = {
         id: docRef.id,
         userId: currentUser.uid,
         title: newNote.title,
-        content: "",
       };
 
       setNotesList([newNoteWithId, ...notesList]);
@@ -131,14 +140,19 @@ const Dashboard = () => {
 
   const updateNoteContent = async (id: string, newContent: string) => {
     const noteDoc = doc(db, "notes", id);
-    await updateDoc(noteDoc, { content: newContent });
+    await updateDoc(
+      noteDoc,
+      { content: newContent, updatedAt: Date.now() }
+    );
   };
+
+  const sortedNotes = notesList.sort((a, b)=> b.updatedAt - a.updatedAt)
 
   return (
     <div className="flex w-full h-full">
       {rotate && <OpenSidebar handleSidebar={handleSidebar} />}
       <SideBar
-        notesList={notesList}
+        notesList={sortedNotes}
         rotate={rotate}
         handleSidebar={handleSidebar}
         onSelectNote={handleSelectNote}
