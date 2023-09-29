@@ -23,7 +23,6 @@ interface NoteContentProps {
 
 const Note: React.FC<NoteContentProps> = ({
   selectedNote,
-  rotate,
   setNoteTitle,
   deleteNote,
   updateNoteTitle,
@@ -71,7 +70,7 @@ const Note: React.FC<NoteContentProps> = ({
           </h1>
         </div>
       ) : (
-        <div className="w-full">
+        <div className="w-full bg-[#f4f4f4] h-screen ">
           <div className=" w-full p-5 flex items-center justify-end">
             <button
               className="border border-[#464646] p-2  text-sm rounded-md"
@@ -96,7 +95,6 @@ const Note: React.FC<NoteContentProps> = ({
             key={editorKey}
             onUpdate={(editor) => {
               const newContent = editor?.getJSON();
-              //console.log(newContent);
               if (selectedNote) {
                 updateNoteContent(selectedNote?.id, newContent);
               }

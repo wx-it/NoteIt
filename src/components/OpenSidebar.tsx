@@ -7,15 +7,15 @@ interface OpenSidebarProps {
 const OpenSidebar: React.FC<OpenSidebarProps> = ({ handleSidebar }) => {
   return (
     <motion.button
-      whileHover={{ scale: 1.1, x: 0 }}
+      whileHover={{ scale: 1.1, x: 0, border: "2px #5E5E5E solid", backgroundColor: "transparent", padding: "1rem" }}
       whileTap={{ scale: 0, x: 0 }}
       transition={{
         type: "tween",
         ease: "easeInOut",
-        duration: 1,
+        duration: 0.5,
       }}
       onClick={handleSidebar}
-      className="fixed left-4 top-4 bg-[#5E5E5E] p-4 rounded-full cursor-pointer "
+      className="fixed left-4 top-4 border-[15px] border-[#5E5E5E]  rounded-full cursor-pointer "
     >
       
     </motion.button>

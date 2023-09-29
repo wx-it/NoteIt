@@ -8,8 +8,8 @@ import { useEffect, useState, useRef } from "react";
 import { signOut } from "firebase/auth";
 import { useNavigate } from "react-router-dom";
 import React from "react";
- import maximizeMinimize2 from "react-useanimations/lib/maximizeMinimize2";
- import UseAnimations from "react-useanimations";
+import maximizeMinimize2 from "react-useanimations/lib/maximizeMinimize2";
+import UseAnimations from "react-useanimations";
 //import Lottie from "lottie-react";
 //import animationData from "../assets/animation_ln4fzgn4.json"
 
@@ -50,7 +50,14 @@ const SideBar: React.FC<SidebarProps> = ({
 
   //get all notes titles
   const notesTitles = filteredNotes.map((note: NoteData) => (
-    <div
+    <motion.div
+    whileHover={{ scale: 1.025, y: -2 }}
+    whileTap={{ scale: 1, y: 0 }}
+    transition={{
+      type: "tween",
+      ease: "easeInOut",
+      duration: 0.5,
+    }}
       key={note.id}
       className={
         selectedNoteId === note.id
@@ -63,7 +70,7 @@ const SideBar: React.FC<SidebarProps> = ({
       }}
     >
       <h3 className="text-sm font-medium">{note.title}</h3>
-    </div>
+    </motion.div>
   ));
 
   //small screen detect
@@ -128,13 +135,12 @@ const SideBar: React.FC<SidebarProps> = ({
             >
               <IoIosArrowDown />
             </motion.div> */}
-             <UseAnimations
+            <UseAnimations
               animation={maximizeMinimize2}
               size={20}
               strokeColor="white"
               speed={0.25}
             />
-          
           </motion.div>
         </div>
         <SearchAndAdd search={search} setSearch={setSearch} addNote={addNote} />
@@ -143,21 +149,21 @@ const SideBar: React.FC<SidebarProps> = ({
         </div>
       </div>
       <div className=" border border-t-black w-full p-4 flex items-center justify-between bg-[#E4E4E4] z-10 ">
-        <div className="flex items-center justify-center gap-3" >
-        {auth.currentUser?.photoURL ? (
-          <img
-            className="w-[40px] rounded-full"
-            src={auth.currentUser?.photoURL || ""}
-            alt=""
-          />
-        ) : (
-          <div className="border border-black rounded-full p-2 text-3xl" >
-            <BiUser />
-          </div>
-        )}
-        <h3 className="text-zinc-700 text-xl ">
-          {auth.currentUser?.displayName}
-        </h3>
+        <div className="flex items-center justify-center gap-3">
+          {auth.currentUser?.photoURL ? (
+            <img
+              className="w-[40px] rounded-full"
+              src={auth.currentUser?.photoURL || ""}
+              alt=""
+            />
+          ) : (
+            <div className="border border-black rounded-full p-2 text-3xl">
+              <BiUser />
+            </div>
+          )}
+          <h3 className="text-zinc-700 text-xl ">
+            {auth.currentUser?.displayName}
+          </h3>
         </div>
         <button
           onClick={handleLogout}

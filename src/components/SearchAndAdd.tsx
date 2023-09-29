@@ -1,16 +1,22 @@
 import { useState } from "react";
 import { IoMdAdd } from "react-icons/io";
 import { motion } from "framer-motion";
-//import { AnimatePresence } from "framer-motion";
-import plusToX from "react-useanimations/lib/plusToX";
-import React from "react";
-import UseAnimations from "react-useanimations";
 
-const SearchAndAdd = ({ search, setSearch, addNote }) => {
+interface SearchAndAdd {
+  search: string;
+  setSearch: (e: string) => void;
+  addNote: (newNote: { title: string }) => void;
+}
+
+const SearchAndAdd: React.FC<SearchAndAdd> = ({
+  search,
+  setSearch,
+  addNote,
+}) => {
   const [newNote, setNewNote] = useState(false);
   const [title, setTitle] = useState("");
 
-  const handleSubmit = (e) => {
+  const handleSubmit = (e: React.MouseEventHandler<HTMLButtonElement>) => {
     e.preventDefault();
     addNote({ title });
     setTitle("");
@@ -30,10 +36,9 @@ const SearchAndAdd = ({ search, setSearch, addNote }) => {
 
         <button
           onClick={() => setNewNote(!newNote)}
-          className="w-10 h-10 bg-neutral-700 bg-opacity-80 rounded-[5px] flex items-center justify-center"
+          className="w-10 h-10 bg-neutral-700 bg-opacity-80 rounded-[5px] flex items-center justify-center text-white text-[35px]"
         >
-          {/* <IoMdAdd /> */}
-          <UseAnimations onClick={()=>  console.log('additional onClick cb is working')} animation={plusToX} strokeColor="white" size={40} loop={true} autoPlay={true} />
+          <IoMdAdd />
         </button>
       </div>
       {newNote && (

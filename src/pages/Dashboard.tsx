@@ -165,9 +165,6 @@ const Dashboard = () => {
           selectedNote={selectedNote}
           notesList={notesList}
           rotate={rotate}
-          setNoteTitle={setNoteTitle}
-          setContent={setContent}
-          content={content}
           deleteNote={deleteNote}
           updateNoteTitle={updateNoteTitle}
           updateNoteContent={updateNoteContent}
