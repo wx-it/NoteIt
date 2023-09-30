@@ -68,11 +68,12 @@ const LoginForm: React.FC<LoginFormProps> = ({ setLogin }) => {
 
   return (
     <div className="flex flex-col items-center justify-center w-screen h-screen md:w-[50%]">
-      <div className="md:w-[50%] flex items-center justify-center flex-col">
+      <div className="w-full flex items-center justify-center flex-col bg-[#F3F3F3] shadow-auth px-4 py-6 rounded-lg ">
         <div className="text-center w-full">
-          <h1 className="text-black text-4xl font-semibold0">NOTE iT</h1>
           <div className="space-y-2 mt-6">
-            <h2 className="text-[22px] font-semibold leading-7 ">Log In</h2>
+            <h2 className="text-[#464646] text-[22px] font-semibold leading-7 ">
+              Log In
+            </h2>
             <p className=" text-slate-800 text-opacity-80 text-sm font-normal leading-[18.76px]">
               Log in to your account.
             </p>
@@ -80,8 +81,8 @@ const LoginForm: React.FC<LoginFormProps> = ({ setLogin }) => {
           <div className="px-6 w-screen mt-4 md:w-full md:px-0">
             <motion.button
               whileHover={{
-                boxShadow: "0px 0px 0px 2px #000",
-                border: "2px black solid",
+                boxShadow: "0px 0px 0px 2px #464646",
+                border: "2px #464646 solid",
               }}
               whileTap={{ scale: 0, x: 0 }}
               transition={{
@@ -114,8 +115,9 @@ const LoginForm: React.FC<LoginFormProps> = ({ setLogin }) => {
             </div>
             <motion.input
               whileFocus={{
-                boxShadow: "0px 2px 0px 2px #000",
-                border: "2px black solid",
+                boxShadow: "0px 2px 0px 2px #464646",
+                border: "2px #464646 solid",
+                backgroundColor: "transparent",
               }}
               //  whileTap={{ scale: 0, x: 0 }}
               transition={{
@@ -143,8 +145,9 @@ const LoginForm: React.FC<LoginFormProps> = ({ setLogin }) => {
             <div className="relative">
               <motion.input
                 whileFocus={{
-                  boxShadow: "0px 2px 0px 2px #000",
-                  border: "2px black solid",
+                  boxShadow: "0px 2px 0px 2px #464646",
+                  border: "2px #464646 solid",
+                  backgroundColor: "transparent",
                 }}
                 //  whileTap={{ scale: 0, x: 0 }}
                 transition={{
@@ -158,7 +161,7 @@ const LoginForm: React.FC<LoginFormProps> = ({ setLogin }) => {
                 onChange={(e) => setPassword(e.target.value)}
               />
               <div
-                className="absolute right-2 top-2 text-black cursor-pointer"
+                className="absolute right-2 top-2 text-[#464646] cursor-pointer"
                 onClick={switchType}
               >
                 {text ? <AiFillEye /> : <AiOutlineEye />}
@@ -170,7 +173,7 @@ const LoginForm: React.FC<LoginFormProps> = ({ setLogin }) => {
 
             <button
               type="submit"
-              className=" cursor-pointer w-full px-3.5 py-2 bg-black rounded text-center text-neutral-100 text-base font-semibold mt-6"
+              className=" cursor-pointer w-full px-3.5 py-2 bg-[#464646] rounded text-center text-neutral-100 text-base font-semibold mt-6"
             >
               Get Started
             </button>
