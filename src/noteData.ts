@@ -3,8 +3,8 @@ interface NoteData {
   id: string;
   title: string;
   content: string;
-  createdAt: number;
-  updatedAt: number;
+  createdAt: Date | undefined;
+  updatedAt: Date | undefined;
 }
 
 export default NoteData;

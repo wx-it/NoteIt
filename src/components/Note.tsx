@@ -23,19 +23,18 @@ interface NoteContentProps {
 
 const Note: React.FC<NoteContentProps> = ({
   selectedNote,
-  setNoteTitle,
   deleteNote,
   updateNoteTitle,
   updateNoteContent,
   notesList,
   editorKey,
+  setSelectedNote,
 }) => {
   const [isEditable, setIsEditable] = useState(false);
   const [open, setOpen] = useState(false);
 
   const handleTitleChange = (e: ChangeEvent<HTMLInputElement>) => {
     const newTitle = e.target.value;
-    setNoteTitle(newTitle);
     updateNoteTitle(selectedNote?.id, newTitle);
   };
 
@@ -59,7 +58,7 @@ const Note: React.FC<NoteContentProps> = ({
     }
   }, [notesList, selectedNote]);
 
-  const currentDate = new Date(selectedNote?.createdAt)
+  const currentDate = new Date(selectedNote?.createdAt).toDateString()
   return (
     <>
       {open ? (
@@ -74,7 +73,7 @@ const Note: React.FC<NoteContentProps> = ({
           <div className=" w-full p-5 flex items-center justify-end">
             <button
               className="border border-[#464646] p-2  text-sm rounded-md"
-              onClick={() => deleteNote(selectedNote?.id)}
+              onClick={() => { deleteNote(selectedNote?.id); setSelectedNote(notesList[0])}}
             >
               <UseAnimations animation={trash2} strokeColor="#464646" />
             </button>
@@ -87,7 +86,7 @@ const Note: React.FC<NoteContentProps> = ({
             onDoubleClick={toggleEdit}
             className="text-black md:text-[32px] text-[20px] mx-8 md:mx-12 font-bold focus:outline-none"
           />
-          <span className="mx-8 md:mx-12 text-xs">{currentDate.toDateString()}</span>
+          <span className="mx-8 md:mx-12 text-xs">{currentDate}</span>
 
           <Editor
             className="shadow-none w-full text-[#1B1B1B]"

@@ -116,6 +116,9 @@ const Dashboard = () => {
         id: docRef.id,
         userId: currentUser.uid,
         title: newNote.title,
+        content: "",
+        createdAt: Date.now(),
+        updatedAt: Date.now(),
       };
 
       setNotesList([newNoteWithId, ...notesList]);
@@ -140,13 +143,10 @@ const Dashboard = () => {
 
   const updateNoteContent = async (id: string, newContent: string) => {
     const noteDoc = doc(db, "notes", id);
-    await updateDoc(
-      noteDoc,
-      { content: newContent, updatedAt: Date.now() }
-    );
+    await updateDoc(noteDoc, { content: newContent, updatedAt: Date.now() });
   };
 
-  const sortedNotes = notesList.sort((a, b)=> b.updatedAt - a.updatedAt)
+  const sortedNotes = notesList.sort((a, b) => b.updatedAt - a.updatedAt);
 
   return (
     <div className="flex w-full h-full">
@@ -162,6 +162,7 @@ const Dashboard = () => {
       />
       <div className={rotate ? "w-full" : "md:w-[75%] w-full"}>
         <Note
+          setSelectedNote={setSelectedNote}
           selectedNote={selectedNote}
           notesList={notesList}
           rotate={rotate}

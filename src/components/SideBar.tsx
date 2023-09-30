@@ -13,7 +13,7 @@ import UseAnimations from "react-useanimations";
 //import Lottie from "lottie-react";
 //import animationData from "../assets/animation_ln4fzgn4.json"
 
-import { BiUser } from "react-icons/bi";
+import { FaUserCircle } from "react-icons/fa";
 
 interface SidebarProps {
   notesList: NoteData[];
@@ -157,8 +157,8 @@ const SideBar: React.FC<SidebarProps> = ({
               alt=""
             />
           ) : (
-            <div className="border border-black rounded-full p-2 text-3xl">
-              <BiUser />
+            <div className="text-zinc-700 text-[35px]">
+              <FaUserCircle />
             </div>
           )}
           <h3 className="text-zinc-700 text-xl ">
