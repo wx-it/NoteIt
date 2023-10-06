@@ -82,7 +82,7 @@ const RegisterForm: React.FC<RegisterFormProps> = ({ setLogin }) => {
   };
 
   return (
-    <div className="flex flex-col items-center justify-center w-screen h-screen md:w-[50%]">
+    <div className="flex flex-col items-center justify-center w-screen h-screen md:w-[50%] lg:w-[70%]">
       <div className=" w-full flex items-center justify-center flex-col bg-[#F3F3F3] shadow-auth px-4 py-6 rounded-lg ">
         <div className="text-center w-full">
           <div className="space-y-2 mt-6">
@@ -215,13 +215,22 @@ const RegisterForm: React.FC<RegisterFormProps> = ({ setLogin }) => {
               )}
             </div>
 
-            <button
+            <motion.button
+              whileHover={{ scale: 1.025 }}
+              whileTap={{ scale: 0.9 }}
+              transition={{
+                type: "spring",
+                damping: 10,
+                mass: 0.75,
+                stiffness: 100,
+                duration: 1,
+              }}
               // onClick={signIn}
               type="submit"
               className=" cursor-pointer w-full px-3.5 py-2 bg-[#464646] rounded text-center text-neutral-100 text-base font-semibold mt-6"
             >
               Get Started
-            </button>
+            </motion.button>
           </div>
           <div className="flex items-center justify-center space-x-1">
             <p className="text-center text-black text-[13px] font-normal leading-none">
