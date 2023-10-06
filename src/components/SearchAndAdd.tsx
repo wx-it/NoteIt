@@ -16,7 +16,9 @@ const SearchAndAdd: React.FC<SearchAndAdd> = ({
   const [newNote, setNewNote] = useState(false);
   const [title, setTitle] = useState("");
 
-  const handleSubmit = (e: React.MouseEventHandler<HTMLButtonElement>) => {
+  const handleSubmit = (
+    e: React.MouseEvent<HTMLButtonElement> | React.FormEvent<HTMLFormElement>
+  ) => {
     e.preventDefault();
     addNote({ title });
     setTitle("");

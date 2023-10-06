@@ -3,21 +3,18 @@ import { useState, useEffect } from "react";
 import ContentEditable from "react-contenteditable";
 import { Editor } from "novel";
 import { JSONContent } from "@tiptap/react";
-import trash2 from "react-useanimations/lib/trash2";
-import UseAnimations from "react-useanimations";
-import React from "react";
+import { ContentEditableEvent } from "react-contenteditable";
 
 interface NoteContentProps {
   selectedNote: NoteData | null;
   rotate: boolean;
-  setNoteTitle: (newTitle: string) => void;
-  deleteNote: (id: string | undefined) => void;
-  updateNoteTitle: (id: string | undefined, newTitle: string) => void;
+  deleteNote: (id: string) => void;
+  updateNoteTitle: (id: string, newTitle: string) => void;
   updateNoteContent: (
-    id: string | undefined,
-    newContent: JSONContent | undefined
-  ) => void;
-  notesList: NoteData;
+    id: string,
+    newContent: JSONContent
+  ) => Promise<void>;
+  notesList: NoteData[];
   editorKey: number;
 }
 
@@ -28,40 +25,34 @@ const Note: React.FC<NoteContentProps> = ({
   updateNoteContent,
   notesList,
   editorKey,
-  setSelectedNote,
 }) => {
-  const [isEditable, setIsEditable] = useState(false);
   const [open, setOpen] = useState(false);
 
-  const handleTitleChange = (e: ChangeEvent<HTMLInputElement>) => {
+  const handleTitleChange = (e: ContentEditableEvent) => {
     const newTitle = e.target.value;
-    updateNoteTitle(selectedNote?.id, newTitle);
-  };
-
-  const toggleEdit = () => {
-    setIsEditable(true);
-  };
-
-  const handleBlur = () => {
-    setIsEditable(false);
+    if (selectedNote?.id) {
+      updateNoteTitle(selectedNote.id, newTitle);
+    }
   };
 
   useEffect(() => {
-    // if (
-    //   notesList.length === 0 ||
-    //   (notesList.length === 0 && selectedNote === null)
-    // ) {
-    //   setOpen(true);
-    // } else 
     if (!selectedNote) {
-      console.log(selectedNote);
       setOpen(true);
     } else {
       setOpen(false);
     }
   }, [notesList, selectedNote]);
 
-  const currentDate = new Date(selectedNote?.createdAt).toDateString();
+  let currentDate = "";
+  if (selectedNote?.createdAt) {
+    currentDate = new Date(selectedNote.createdAt).toDateString();
+  }
+
+  let currentId: string;
+  if (selectedNote?.id) {
+    currentId = selectedNote.id;
+  }
+
   return (
     <>
       {open ? (
@@ -77,10 +68,9 @@ const Note: React.FC<NoteContentProps> = ({
             <button
               className="border border-[#464646] p-2  text-sm rounded-md"
               onClick={() => {
-                deleteNote(selectedNote?.id);
+                deleteNote(currentId);
               }}
             >
-              {/* <UseAnimations animation={trash2} strokeColor="#464646" /> */}
               <svg
                 xmlns="http://www.w3.org/2000/svg"
                 width="20"
@@ -104,8 +94,6 @@ const Note: React.FC<NoteContentProps> = ({
             html={selectedNote?.title ? selectedNote.title : ""}
             disabled={false}
             onChange={handleTitleChange}
-            onBlur={handleBlur}
-            onDoubleClick={toggleEdit}
             className="text-black md:text-[32px] text-[20px] mx-8 md:mx-12 font-bold focus:outline-none"
           />
           <span className="mx-8 md:mx-12 text-xs">{currentDate}</span>
@@ -116,7 +104,7 @@ const Note: React.FC<NoteContentProps> = ({
             key={editorKey}
             onUpdate={(editor) => {
               const newContent = editor?.getJSON();
-              if (selectedNote) {
+              if (selectedNote && newContent) {
                 updateNoteContent(selectedNote?.id, newContent);
               }
             }}

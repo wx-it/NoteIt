@@ -8,7 +8,6 @@ import {
   onSnapshot,
   updateDoc,
   deleteDoc,
-  setDoc,
   doc,
 } from "firebase/firestore";
 import SideBar from "../components/SideBar";
@@ -17,6 +16,7 @@ import OpenSidebar from "../components/OpenSidebar";
 import NoteData from "../noteData";
 import { auth } from "../config/firebase";
 import { User } from "firebase/auth";
+import { JSONContent } from "@tiptap/react";
 
 const Dashboard = () => {
   const [editorKey, setEditorKey] = useState<number>(0);
@@ -51,7 +51,7 @@ const Dashboard = () => {
         lastOpenedNote === selectedNote?.id;
       }
     }
-  }, [notesList]);
+  }, [notesList, selectedNote?.id]);
 
   const handleSidebar = () => {
     setRotate(!rotate);
@@ -74,9 +74,16 @@ const Dashboard = () => {
         );
 
         const unsubscribeNotes = onSnapshot(userNotesQuery, (snapshot) => {
-          const notesData: { id: string }[] = [];
+          const notesData: NoteData[] = [];
           snapshot.forEach((doc) => {
-            notesData.push({ id: doc.id, ...doc.data() });
+            notesData.push({
+              id: doc.id,
+              title: "",
+              content: "",
+              createdAt: "",
+              updatedAt: "",
+              ...doc.data(),
+            });
           });
           setNotesList(notesData);
         });
@@ -88,7 +95,7 @@ const Dashboard = () => {
       }
     });
     return () => unsubscribe();
-  }, []);
+  }, [user]);
 
   //add new note
   const createNote = async (newNote: { title: string }) => {
@@ -127,17 +134,8 @@ const Dashboard = () => {
   const deleteNote = async (id: string) => {
     const noteDoc = doc(db, "notes", id);
     await deleteDoc(noteDoc);
-    setSelectedNote(null)
+    setSelectedNote(null);
   };
-
-  // useEffect(()=>{
-  //   if(selectedNote === null){
-  //     console.log("wiwo")
-  //     setSelectedNote(notesList[0])
-  //   }
-
-
-  // }, [selectedNote, notesList])
 
   //update note
   const updateNoteTitle = async (id: string, newTitle: string) => {
@@ -147,12 +145,17 @@ const Dashboard = () => {
     await updateDoc(noteDoc, { title: decodedTitle });
   };
 
-  const updateNoteContent = async (id: string, newContent: string) => {
+  const updateNoteContent = async (id: string, newContent: JSONContent) => {
     const noteDoc = doc(db, "notes", id);
     await updateDoc(noteDoc, { content: newContent, updatedAt: Date.now() });
   };
 
-  const sortedNotes = notesList.sort((a, b) => b.updatedAt - a.updatedAt);
+  const sortedNotes = notesList.sort((a, b) => {
+    if (typeof a.updatedAt === "number" && typeof b.updatedAt === "number") {
+      return b.updatedAt - a.updatedAt;
+    }
+    return 0;
+  });
 
   return (
     <div className="flex w-full h-full">
@@ -168,14 +171,14 @@ const Dashboard = () => {
       />
       <div className={rotate ? "w-full" : "md:w-[75%] w-full"}>
         <Note
-          setSelectedNote={setSelectedNote}
+          // setSelectedNote={setSelectedNote}
           selectedNote={selectedNote}
-          notesList={notesList}
           rotate={rotate}
           deleteNote={deleteNote}
           updateNoteTitle={updateNoteTitle}
           updateNoteContent={updateNoteContent}
           editorKey={editorKey}
+          notesList={notesList}
         />
       </div>
     </div>

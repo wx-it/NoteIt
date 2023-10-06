@@ -34,20 +34,22 @@ const LoginForm: React.FC<LoginFormProps> = ({ setLogin }) => {
     try {
       await signInWithEmailAndPassword(auth, email, password);
       navigate("/dashboard");
-    } catch (error: FirebaseError) {
-      if (error.code === "auth/missing-password") {
-        setPasswordError("Missing password");
-      }
-      if (error.code === "auth/wrong-password") {
-        setPasswordError("Wrong password, please try again");
-      }
+    } catch (error: unknown) {
+      if (error instanceof FirebaseError) {
+        if (error.code === "auth/missing-password") {
+          setPasswordError("Missing password");
+        }
+        if (error.code === "auth/wrong-password") {
+          setPasswordError("Wrong password, please try again");
+        }
 
-      if (error.code === "auth/user-not-found") {
-        setEmailError("Email not found, please sign up instead");
-      }
+        if (error.code === "auth/user-not-found") {
+          setEmailError("Email not found, please sign up instead");
+        }
 
-      if (error.code === "auth/invalid-email") {
-        setEmailError("Invalide email");
+        if (error.code === "auth/invalid-email") {
+          setEmailError("Invalid email");
+        }
       }
     }
   };

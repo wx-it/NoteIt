@@ -4,25 +4,19 @@ import NoteData from "../noteData";
 import { auth } from "../config/firebase";
 import { BiLogOut } from "react-icons/bi";
 import SearchAndAdd from "./SearchAndAdd";
-import { useEffect, useState, useRef } from "react";
+import { useEffect, useState } from "react";
 import { signOut } from "firebase/auth";
 import { useNavigate } from "react-router-dom";
 import React from "react";
-import maximizeMinimize2 from "react-useanimations/lib/maximizeMinimize2";
-import UseAnimations from "react-useanimations";
-//import Lottie from "lottie-react";
-//import animationData from "../assets/animation_ln4fzgn4.json"
-
 import { FaUserCircle } from "react-icons/fa";
 
 interface SidebarProps {
   notesList: NoteData[];
-  filteredNotes: NoteData[];
   handleSidebar: () => void;
   rotate: boolean;
   onSelectNote: (note: NoteData) => void;
   selectedNoteId: string | null;
-  addNote: () => void;
+  addNote: (newNote: { title: string }) => void;
   setEditorKey: (newValue: number | ((prevKey: number) => number)) => void;
 }
 
@@ -38,7 +32,7 @@ const SideBar: React.FC<SidebarProps> = ({
   //const expandAnimationRef = useRef(null)
   //search for notes
   const [search, setSearch] = useState("");
-  const [filteredNotes, setFilteredNotes] = useState([]);
+  const [filteredNotes, setFilteredNotes] = useState<NoteData[]>([]);
 
   useEffect(() => {
     const filtered = notesList.filter((note) => {

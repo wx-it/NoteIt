@@ -1,7 +1,7 @@
 import { FcGoogle } from "react-icons/fc";
 import { AiOutlineEye, AiFillEye } from "react-icons/ai";
 import { useState } from "react";
-import { auth, googleProvider } from "../config/firebase";
+import { googleProvider } from "../config/firebase";
 import {
   createUserWithEmailAndPassword,
   signInWithPopup,
@@ -9,11 +9,16 @@ import {
   updateProfile,
 } from "firebase/auth";
 
-import { useNavigate, Link } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { motion } from "framer-motion";
 import { useForm } from "react-hook-form";
+import { FirebaseError } from "firebase/app";
 
-const RegisterForm = ({setLogin}) => {
+interface RegisterFormProps {
+  setLogin: React.Dispatch<React.SetStateAction<boolean>>;
+}
+
+const RegisterForm: React.FC<RegisterFormProps> = ({ setLogin }) => {
   const [text, setText] = useState(false);
   const [name, setName] = useState<string>("");
   const [email, setEmail] = useState<string>("");
@@ -22,41 +27,42 @@ const RegisterForm = ({setLogin}) => {
   const [emailError, setEmailError] = useState<string | null>(null);
   const [passwordError, setPasswordError] = useState<string | null>(null);
 
-  const {
-    register,
-  } = useForm();
+  const { register } = useForm();
 
   const navigate = useNavigate();
 
   const auth = getAuth();
 
-  const signIn = async (e) => {
+  const signIn = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     try {
       await createUserWithEmailAndPassword(auth, email, password);
-      updateProfile(auth.currentUser, {
-        displayName: name,
-    });
+      if (auth.currentUser) {
+        updateProfile(auth.currentUser, {
+          displayName: name,
+        });
+      }
       navigate("/dashboard");
-    } catch (error) {
-      console.log(error);
-      if (error.code === "auth/missing-password") {
-        setPasswordError("Missing password");
-      }
-      if (error.code === "auth/weak-password") {
-        setPasswordError("Password should be at least 6 characters");
-      }
+    } catch (error: unknown) {
+      if (error instanceof FirebaseError) {
+        if (error.code === "auth/missing-password") {
+          setPasswordError("Missing password");
+        }
+        if (error.code === "auth/weak-password") {
+          setPasswordError("Password should be at least 6 characters");
+        }
 
-      if (error.code === "auth/email-already-in-use") {
-        setEmailError("Email already in use, please log in instead");
-      }
+        if (error.code === "auth/email-already-in-use") {
+          setEmailError("Email already in use, please log in instead");
+        }
 
-      if (error.code === "auth/invalid-email") {
-        setEmailError("Invalide email");
-      }
+        if (error.code === "auth/invalid-email") {
+          setEmailError("Invalide email");
+        }
 
-      if (!name) {
-        setNameError("Missing name");
+        if (!name) {
+          setNameError("Missing name");
+        }
       }
     }
   };
@@ -126,7 +132,7 @@ const RegisterForm = ({setLogin}) => {
               whileFocus={{
                 boxShadow: "0px 2px 0px 2px #464646",
                 border: "2px #464646 solid",
-                backgroundColor: "transparent"
+                backgroundColor: "transparent",
               }}
               //  whileTap={{ scale: 0, x: 0 }}
               transition={{
@@ -155,7 +161,7 @@ const RegisterForm = ({setLogin}) => {
               whileFocus={{
                 boxShadow: "0px 2px 0px 2px #464646",
                 border: "2px #464646 solid",
-                backgroundColor: "transparent"
+                backgroundColor: "transparent",
               }}
               //  whileTap={{ scale: 0, x: 0 }}
               transition={{
@@ -185,7 +191,7 @@ const RegisterForm = ({setLogin}) => {
                 whileFocus={{
                   boxShadow: "0px 2px 0px 2px #464646",
                   border: "2px #464646 solid",
-                  backgroundColor: "transparent"
+                  backgroundColor: "transparent",
                 }}
                 //  whileTap={{ scale: 0, x: 0 }}
                 transition={{
@@ -221,7 +227,10 @@ const RegisterForm = ({setLogin}) => {
             <p className="text-center text-black text-[13px] font-normal leading-none">
               Already have an account?
             </p>
-            <a onClick={()=> setLogin(true)}  className=" cursor-pointer text-center text-neutral-700 text-opacity-80 text-[13px] font-semibold">
+            <a
+              onClick={() => setLogin(true)}
+              className=" cursor-pointer text-center text-neutral-700 text-opacity-80 text-[13px] font-semibold"
+            >
               Log in
             </a>
           </div>

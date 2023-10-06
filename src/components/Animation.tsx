@@ -1,4 +1,3 @@
-import React from 'react'
  import maximizeMinimize2 from "react-useanimations/lib/maximizeMinimize2";
  import UseAnimations from "react-useanimations";
 
