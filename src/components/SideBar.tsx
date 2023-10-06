@@ -51,13 +51,13 @@ const SideBar: React.FC<SidebarProps> = ({
   //get all notes titles
   const notesTitles = filteredNotes.map((note: NoteData) => (
     <motion.div
-    whileHover={{ scale: 1.025, y: -2 }}
-    whileTap={{ scale: 1, y: 0 }}
-    transition={{
-      type: "tween",
-      ease: "easeInOut",
-      duration: 0.5,
-    }}
+      whileHover={{ scale: 1.025, y: -2 }}
+      whileTap={{ scale: 1, y: 0 }}
+      transition={{
+        type: "tween",
+        ease: "easeInOut",
+        duration: 0.5,
+      }}
       key={note.id}
       className={
         selectedNoteId === note.id
@@ -135,12 +135,30 @@ const SideBar: React.FC<SidebarProps> = ({
             >
               <IoIosArrowDown />
             </motion.div> */}
-            <UseAnimations
+            {/* <UseAnimations
               animation={maximizeMinimize2}
               size={20}
               strokeColor="white"
               speed={0.25}
-            />
+            /> */}
+
+            <motion.svg
+              whileHover={{ rotate: "20deg" }}
+              whileTap={{ rotate: "90deg" }}
+              xmlns="http://www.w3.org/2000/svg"
+              viewBox="0 0 24 24"
+              id="close"
+              width={"20"}
+              fill="white"
+              className="focus:outline-none"
+            >
+              <g data-name="Layer 2">
+                <path
+                  d="m13.41 12 4.3-4.29a1 1 0 1 0-1.42-1.42L12 10.59l-4.29-4.3a1 1 0 0 0-1.42 1.42l4.3 4.29-4.3 4.29a1 1 0 0 0 0 1.42 1 1 0 0 0 1.42 0l4.29-4.3 4.29 4.3a1 1 0 0 0 1.42 0 1 1 0 0 0 0-1.42z"
+                  data-name="close"
+                ></path>
+              </g>
+            </motion.svg>
           </motion.div>
         </div>
         <SearchAndAdd search={search} setSearch={setSearch} addNote={addNote} />

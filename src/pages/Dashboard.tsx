@@ -24,10 +24,6 @@ const Dashboard = () => {
   const [rotate, setRotate] = useState(false);
   const [selectedNote, setSelectedNote] = useState<NoteData | null>(null);
 
-  //inline edits
-  const [noteTitle, setNoteTitle] = useState<string>("");
-  const [content, setContent] = useState("");
-
   const selectedNoteId: string | null = localStorage.getItem("selectedNoteId");
 
   //const [selectedNoteId, setSelectedNoteId] = useState(localStorage.getItem("selectedNoteId"))
@@ -131,7 +127,17 @@ const Dashboard = () => {
   const deleteNote = async (id: string) => {
     const noteDoc = doc(db, "notes", id);
     await deleteDoc(noteDoc);
+    setSelectedNote(null)
   };
+
+  // useEffect(()=>{
+  //   if(selectedNote === null){
+  //     console.log("wiwo")
+  //     setSelectedNote(notesList[0])
+  //   }
+
+
+  // }, [selectedNote, notesList])
 
   //update note
   const updateNoteTitle = async (id: string, newTitle: string) => {

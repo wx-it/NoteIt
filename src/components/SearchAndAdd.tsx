@@ -34,12 +34,17 @@ const SearchAndAdd: React.FC<SearchAndAdd> = ({
           className="border border-[#BDBDBD] p-2 pl-4 rounded-md bg-[#D6D6D6] text-[#726F6F] text-[15px] font-light font-['Poppins'] focus:outline-none"
         />
 
-        <button
+        <motion.button
           onClick={() => setNewNote(!newNote)}
           className="w-10 h-10 bg-neutral-700 bg-opacity-80 rounded-[5px] flex items-center justify-center text-white text-[35px]"
         >
-          <IoMdAdd />
-        </button>
+          <motion.div
+            whileHover={{ rotate: "20deg" }}
+            whileTap={{ rotate: "90deg" }}
+          >
+            <IoMdAdd />
+          </motion.div>
+        </motion.button>
       </div>
       {newNote && (
         <motion.div

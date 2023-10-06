@@ -5,7 +5,7 @@ import { Editor } from "novel";
 import { JSONContent } from "@tiptap/react";
 import trash2 from "react-useanimations/lib/trash2";
 import UseAnimations from "react-useanimations";
-import React from 'react';
+import React from "react";
 
 interface NoteContentProps {
   selectedNote: NoteData | null;
@@ -47,18 +47,21 @@ const Note: React.FC<NoteContentProps> = ({
   };
 
   useEffect(() => {
-    if (
-      notesList.length === 0 ||
-      selectedNote === null ||
-      (notesList.length === 0 && selectedNote === null)
-    ) {
+    // if (
+    //   notesList.length === 0 ||
+    //   (notesList.length === 0 && selectedNote === null)
+    // ) {
+    //   setOpen(true);
+    // } else 
+    if (!selectedNote) {
+      console.log(selectedNote);
       setOpen(true);
     } else {
       setOpen(false);
     }
   }, [notesList, selectedNote]);
 
-  const currentDate = new Date(selectedNote?.createdAt).toDateString()
+  const currentDate = new Date(selectedNote?.createdAt).toDateString();
   return (
     <>
       {open ? (
@@ -73,9 +76,28 @@ const Note: React.FC<NoteContentProps> = ({
           <div className=" w-full p-5 flex items-center justify-end">
             <button
               className="border border-[#464646] p-2  text-sm rounded-md"
-              onClick={() => { deleteNote(selectedNote?.id); setSelectedNote(notesList[0])}}
+              onClick={() => {
+                deleteNote(selectedNote?.id);
+              }}
             >
-              <UseAnimations animation={trash2} strokeColor="#464646" />
+              {/* <UseAnimations animation={trash2} strokeColor="#464646" /> */}
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                width="20"
+                height="22"
+                id="trash"
+              >
+                <g
+                  fill="none"
+                  fillRule="evenodd"
+                  stroke="#464646"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  strokeWidth="2"
+                >
+                  <path d="M1 5h18M17 5v14a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5m3 0V3a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2M8 10v6M12 10v6"></path>
+                </g>
+              </svg>
             </button>
           </div>
           <ContentEditable
