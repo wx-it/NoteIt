@@ -4,13 +4,23 @@ import LoginForm from "../components/LoginForm";
 import { useState } from "react";
 import Lottie from "lottie-react";
 import animationData from "../assets/animation_ln5y0mmr.json";
+import { motion } from "framer-motion";
 
 const Authentication = () => {
   const [login, setLogin] = useState<boolean>(false);
 
   return (
     <div className="flex w-full h-screen items-center justify-center bg-[#fff]">
-      <div className="flex flex-col w-[50%] h-[50%] items-center justify-center gap-4">
+      <motion.div
+        initial={{ opacity: 0 }}
+        animate={{
+          opacity: 1,
+          transition: {
+            duration: 2,
+          },
+        }}
+        className="flex flex-col w-[50%] h-[50%] items-center justify-center gap-4"
+      >
         <h1 className="text-[#464646] text-4xl font-semibold">NoteIt.</h1>
 
         {login ? (
@@ -18,8 +28,17 @@ const Authentication = () => {
         ) : (
           <RegisterForm setLogin={setLogin} />
         )}
-      </div>
-      <div className="w-[50%] md:flex bg-[#464646] hidden items-center justify-center flex-col h-[95%] mx-4 rounded-xl ">
+      </motion.div>
+      <motion.div
+        initial={{ opacity: 0 }}
+        animate={{
+          opacity: 1,
+          transition: {
+            duration: 2,
+          },
+        }}
+        className="w-[50%] md:flex bg-[#464646] hidden items-center justify-center flex-col h-[95%] mx-4 rounded-xl "
+      >
         {/* <img
           className=" h-full w-full object-cover filter brightness-85 "
           src={loginImg}
@@ -30,7 +49,7 @@ const Authentication = () => {
         <h2 className="text-white text-3xl font-semibold max-w-sm text-center">
           Create an account and start typing!
         </h2>
-      </div>
+      </motion.div>
     </div>
   );
 };
