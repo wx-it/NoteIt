@@ -69,18 +69,18 @@ const LoginForm: React.FC<LoginFormProps> = ({ setLogin }) => {
   };
 
   return (
-    <div className="flex flex-col items-center justify-center w-screen h-screen md:w-[50%] lg:w-[70%]">
+    <div className="flex flex-col items-center justify-center w-[100%] px-4 h-screen md:w-[70%] lg:w-[60%]">
       <div className="w-full flex items-center justify-center flex-col bg-[#F3F3F3] shadow-auth px-4 py-6 rounded-lg ">
         <div className="text-center w-full">
-          <div className="space-y-2 mt-6">
-            <h2 className="text-[#464646] text-[22px] font-semibold leading-7 ">
+          <div className="space-y-2 mt-6 flex items-center justify-center flex-col">
+            <h2 className="text-[#464646] text-[22px] font-semibold leading-7">
               Log In
             </h2>
-            <p className=" text-slate-800 text-opacity-80 text-sm font-normal leading-[18.76px]">
+            <p className=" text-slate-800 text-opacity-80 text-xs md:text-sm w-[70%] text-center font-normal leading-[18.76px]">
               Log in to your account.
             </p>
           </div>
-          <div className="px-6 w-screen mt-4 md:w-full md:px-0">
+          <div className="px-6 mt-4 w-full md:px-0">
             <motion.button
               whileHover={{
                 boxShadow: "0px 0px 0px 2px #464646",
@@ -93,7 +93,7 @@ const LoginForm: React.FC<LoginFormProps> = ({ setLogin }) => {
                 duration: 1,
               }}
               onClick={signInWithGoogle}
-              className="cursor-pointer w-full px-3.5 py-2 text-lg rounded border border-blue-950 border-opacity-25 justify-center items-center gap-5 inline-flex"
+              className="cursor-pointer w-full px-3.5 py-2 text-lg bg-transparent rounded border border-blue-950 border-opacity-25 justify-center items-center inline-flex"
             >
               <FcGoogle />
             </motion.button>

@@ -19,7 +19,7 @@ const Authentication = () => {
             duration: 2,
           },
         }}
-        className="flex flex-col w-[50%] h-[50%] items-center justify-center gap-4"
+        className="flex flex-col md:w-[50%] h-[50%] w-full items-center justify-center gap-4"
       >
         <h1 className="text-[#464646] text-4xl font-semibold">NoteIt.</h1>
 
