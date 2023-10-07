@@ -68,6 +68,7 @@ const SideBar: React.FC<SidebarProps> = ({
   ));
 
   //small screen detect
+  const isLargerScreen = window.innerWidth <= 1024;
   const isSmallScreen = window.innerWidth <= 768;
   const isMobileScreen = window.innerWidth <= 500;
 
@@ -95,7 +96,9 @@ const SideBar: React.FC<SidebarProps> = ({
           ? "100%"
           : isSmallScreen
           ? "50%"
-          : "25%",
+          : isLargerScreen
+          ? "30%"
+          : "20%",
       }}
       transition={{
         type: "tween",
@@ -111,31 +114,8 @@ const SideBar: React.FC<SidebarProps> = ({
           </h1>
           <motion.div
             onClick={handleSidebar}
-            className="flex flex-col items-center justify-center p-[2.5vw] md:p-[0.75vw] rounded-full cursor-pointer w-fit bg-[#5E5E5E]"
+            className="flex flex-col items-center justify-center p-[1.5vw] md:p-[0.75vw] rounded-full cursor-pointer w-fit bg-[#5E5E5E]"
           >
-            {/* <motion.div
-              whileHover={{ scale: rotate ? 1.1 : 1.1 }}
-              whileTap={{ scale: rotate ? 0.9 : 0 }}
-              animate={{ rotate: rotate ? 0 : 180 }}
-              className=" text-black"
-            >
-              <IoIosArrowDown />
-            </motion.div>
-            <motion.div
-              whileHover={{ scale: rotate ? 1.1 : 1.1 }}
-              whileTap={{ scale: rotate ? 0.9 : 0 }}
-              animate={{ rotate: rotate ? 180 : 0 }}
-              className=" text-black"
-            >
-              <IoIosArrowDown />
-            </motion.div> */}
-            {/* <UseAnimations
-              animation={maximizeMinimize2}
-              size={20}
-              strokeColor="white"
-              speed={0.25}
-            /> */}
-
             <motion.svg
               whileHover={{ rotate: "20deg" }}
               whileTap={{ rotate: "90deg" }}
@@ -156,7 +136,7 @@ const SideBar: React.FC<SidebarProps> = ({
           </motion.div>
         </div>
         <SearchAndAdd search={search} setSearch={setSearch} addNote={addNote} />
-        <div className=" overflow-y-auto max-h-[69vh] w-full">
+        <div className=" overflow-y-auto md:max-h-[69vh] max-h-[66vh] w-full">
           {notesTitles}
         </div>
       </div>
@@ -173,7 +153,7 @@ const SideBar: React.FC<SidebarProps> = ({
               <FaUserCircle />
             </div>
           )}
-          <h3 className="text-zinc-700 text-xl ">
+          <h3 className="text-zinc-700 text-md ">
             {auth.currentUser?.displayName}
           </h3>
         </div>
