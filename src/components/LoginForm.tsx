@@ -183,6 +183,9 @@ const LoginForm: React.FC<LoginFormProps> = ({ setLogin }) => {
                 stiffness: 100,
                 duration: 1,
               }}
+              style={{
+                backgroundColor: "#464646",
+              }}
               type="submit"
               className=" cursor-pointer w-full px-3.5 py-2 bg-[#464646] rounded text-center text-neutral-100 text-base font-semibold mt-6"
             >

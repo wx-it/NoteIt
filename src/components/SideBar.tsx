@@ -136,11 +136,11 @@ const SideBar: React.FC<SidebarProps> = ({
           </motion.div>
         </div>
         <SearchAndAdd search={search} setSearch={setSearch} addNote={addNote} />
-        <div className=" overflow-y-auto md:max-h-[69vh] max-h-[66vh] w-full">
+        <div className=" overflow-y-auto max-h-[69vh] w-full">
           {notesTitles}
         </div>
       </div>
-      <div className=" border border-t-black w-full p-4 flex items-center justify-between bg-[#E4E4E4] z-10 ">
+      <div className=" border border-t-black w-full p-4 flex items-center justify-between bg-[#E4E4E4] fixed bottom-0 sm:relative ">
         <div className="flex items-center justify-center gap-3">
           {auth.currentUser?.photoURL ? (
             <img

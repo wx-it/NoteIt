@@ -83,7 +83,7 @@ const RegisterForm: React.FC<RegisterFormProps> = ({ setLogin }) => {
 
   return (
     <div className="flex flex-col items-center justify-center w-[100%] px-4 h-screen md:w-[70%] lg:w-[60%]">
-      <div className=" w-full flex items-center justify-center flex-col bg-[#F3F3F3] shadow-auth px-0 py-6 rounded-lg ">
+      <div className=" w-full flex items-center justify-center flex-col bg-[#F3F3F3] shadow-auth px-4 py-6 rounded-lg ">
         <div className="text-center w-full">
           <div className="space-y-2 mt-6 flex items-center justify-center flex-col ">
             <h2 className="text-[#464646] text-[22px] font-semibold leading-7">
@@ -106,7 +106,7 @@ const RegisterForm: React.FC<RegisterFormProps> = ({ setLogin }) => {
                 duration: 1,
               }}
               onClick={signInWithGoogle}
-              className="cursor-pointer w-full px-3.5 py-2 text-lg bg-transparent rounded border border-blue-950 border-opacity-25 justify-center items-center inline-flex"
+              className="cursor-pointer w-full px-3.5 py-2 text-lg bg-[#F3F3F3] rounded border border-blue-950 border-opacity-25 justify-center items-center inline-flex"
             >
               <FcGoogle />
             </motion.button>
@@ -226,6 +226,9 @@ const RegisterForm: React.FC<RegisterFormProps> = ({ setLogin }) => {
                 duration: 1,
               }}
               // onClick={signIn}
+              style={{
+                backgroundColor: "#464646",
+              }}
               type="submit"
               className=" cursor-pointer w-full px-3.5 py-2 bg-[#464646] rounded text-center text-neutral-100 text-base font-semibold mt-6"
             >
